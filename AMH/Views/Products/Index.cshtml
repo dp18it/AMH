@@ -1,0 +1,463 @@
+﻿@using AMH.Common;
+@using AMH.Pages;
+@using AMH.Controllers;
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<body>
+    <style>
+
+
+        body ::-webkit-scrollbar {
+            width: 2px;
+            border-radius: 15px;
+        }
+
+        body ::-webkit-scrollbar-thumb {
+            background-color: darkgrey;
+            outline: 1px solid darkgrey;
+        }
+
+        .box-sh {
+            box-shadow: 0px 0px 7px #00000029;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+
+        .range-slider {
+            position: relative;
+            width: 100%;
+            height: 7px;
+            border-radius: 15px;
+            background: hsl(218deg 95% 54% / 19%);
+        }
+
+            .range-slider .progress {
+                position: absolute;
+                left: 15%;
+                right: 0%;
+                height: 100%;
+                border-radius: 15px;
+                background: hsl(218, 95%, 54%);
+            }
+
+            .range-slider input[type="range"] {
+                position: absolute;
+                width: 100%;
+                height: 6px;
+                -webkit-appearance: none;
+                pointer-events: none;
+                background: none;
+                outline: none;
+            }
+
+            .range-slider .range-min::-webkit-slider-thumb {
+                pointer-events: auto;
+                -webkit-appearance: none;
+                width: 20px;
+                height: 20px;
+                background: #fcfcfc 0% 0% no-repeat padding-box;
+                border: 3px solid hsl(218, 95%, 54%);
+                border-radius: 20px;
+                opacity: 1;
+            }
+
+            .range-slider .range-max::-webkit-slider-thumb {
+                pointer-events: auto;
+                -webkit-appearance: none;
+                width: 20px;
+                height: 20px;
+                background: #fcfcfc 0% 0% no-repeat padding-box;
+                border: 3px solid hsl(218, 95%, 54%);
+                border-radius: 20px;
+                opacity: 1;
+            }
+
+        .range-slider-main {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+
+    <!-- Modernizer JS -->
+    <script src="~Theme/assets/js/vendor/modernizr-2.8.3.min.js"></script>
+    <div class="breadcrumb-area mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="breadcrumb-container">
+                        <ul>
+                            <li><a href="/Home/Index"><i class="fa fa-home"></i> Home</a></li>
+                            <li class="active"><a href="Home/Product/Index">Product</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" id="filterproduct" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="title" id="defaultModalLabel">Add OrderAMH</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="ManageOrderAMHForm" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 mt-2">
+                                <label>Category</label>
+                                @Html.Raw(Html.DropDownList("SubCategoryId", (IEnumerable<SelectListItem>)ViewBag.SubCategoryDrp, new { @Id = "SubCategoryId", data_live_search = "true", data_show_subtext = "true",  @class = "form-control selectpicker" }))
+                            </div>
+                            <div class="form-group col-lg-12 mt-2">
+                                <label>Price</label>
+                                <div class="range-slider-main">
+                                    <div class="min-value numberVal mr-2">
+                                        <input type="hidden" id="FromAge" class="" min="0" max="10000" value="" disabled>
+                                        <p class="mb-0" id="ageMin">0</p>
+                                    </div>
+                                    <div class="range-slider">
+                                        <div class="progress"></div>
+                                        <span class="range-min-wrapper">
+                                            <input class="range-min" id="minAge" type="range" min="0" max="10000" value="0">
+                                        </span>
+                                        <span class="range-max-wrapper">
+                                            <input class="range-max" id="maxAge" type="range" min="0" max="10000" value="10000">
+                                        </span>
+                                    </div>
+                                    <div class="max-value numberVal ml-2">
+                                        <input type="hidden" id="ToAge" class="border text-center" min="0" max="10000" value="" disabled>
+                                        <p class="mb-0" id="ageMax">10000</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <a class="register-button mt-0" onclick="removefilter();" style=" width: 170px;color:white;">Remove Filter</a>&nbsp;&nbsp;&nbsp;
+                        <button id="btnSearch" type="button" onclick="filterpro();" class="register-button mt-0">Filter</button>
+                        <button id="loadingsave" class="btn btn-primary loading" type="button" disabled style="display:none;float:right;">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Searching...
+                        </button>
+                        <button type="button" data-dismiss="modal" class="btn btn-secondary closeBtn" style=" border-radius: 50px">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--=====  End of breadcrumb area  ======-->
+    <!--=============================================
+    =            Shop page container         =
+    =============================================-->
+
+    <div class="shop-page-container mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 mb-sm-35 mb-xs-35">
+                    <div class="shop-header mb-35">
+                        <div class="row">
+                            <div class="text-center">
+                                    <a class="register-button mt-0 fa fa-filter" onclick="filterpopup();" style="color: white; width: 200px; margin-left: 460px; ">Filter Products</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="shop-product-wrap grid row no-gutters mb-35" id="ProductItem">
+
+                    </div>
+                </div>
+
+                <div class="col-lg-12 mb-sm-35 mb-xs-35">
+                    <label></label>
+                    <label></label>
+                </div>
+
+                <div class="container" id="showmore" style="background-color:white;">
+                </div>
+
+
+                <!--=======  End of Pagination container  =======-->
+
+            </div>
+        </div>
+    </div>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <a href="#" class="scroll-top"></a>
+    <!-- end of scroll to top -->
+    <!-- JS
+    ============================================ -->
+    <!--jQuery JS -->
+    <script src="~/Theme/assets/js/vendor/jquery.min.js"></script>
+    <!--Popper JS-->
+    <script src="~/Theme/assets/js/popper.min.js"></script>
+    <!--Bootstrap JS-->
+    <script src="~/Theme/assets/js/bootstrap.min.js"></script>
+    <!--Plugins JS-->
+    <script src="~/Theme/assets/js/plugins.js"></script>
+    <script src="~/Theme/assets/css/font-awesome.min.css"></script>
+    <script src="~/Theme/assets/js/main.js"></script>
+</body>
+<script>
+
+
+    const range = document.querySelectorAll(".range-slider span input");
+    progress = document.querySelector(".range-slider .progress");
+    let gap = 0.1;
+    const inputValue = document.querySelectorAll(".numberVal input");
+
+    let minRange = parseInt(range[0].value);
+    let maxRange = parseInt(range[1].value);
+    progress.style.left = (minRange / range[0].max) * 100 + "%";
+    progress.style.right = 100 - (maxRange / range[1].max) * 100 + "%";
+   
+    range.forEach((input) => {
+        input.addEventListener("input", (e) => {
+            minRange = parseInt(range[0].value);
+            maxRange = parseInt(range[1].value);
+
+            if (maxRange - minRange < gap) {
+                if (e.target.className === "range-min") {
+                    range[0].value = maxRange - gap;
+                } else {
+                    range[1].value = minRange + gap;
+                }
+            } else {
+                progress.style.left = (minRange / range[0].max) * 100 + "%";
+                progress.style.right = 100 - (maxRange / range[1].max) * 100 + "%";
+                inputValue[0].value = minRange;
+                inputValue[1].value = maxRange;
+                $("#ageMin").text(minRange);
+                $("#ageMax").text(maxRange);
+            }
+        });
+    });
+
+
+    $("#SubCategoryId").append('<option value="" disabled selected hidden> Please select category </option>');
+    var limit = 0;
+    $(document).ready(function ($) {
+            $('#menu2').addClass('active');
+            $('#menu1').removeClass('active');
+            $('#menu3').removeClass('active');
+        search = '@ViewBag.srech';
+        $("#Search").val('@ViewBag.srech');
+        productadd(search,12);
+    });
+    function filterpopup() {
+        $('#filterproduct').modal('show');
+    }
+    function filterpro() {
+        var fp = $("#FromAge").val();
+        var tp = $("#ToAge").val();
+        var si = $("#SubCategoryId").val();
+        productadd(search, 12,fp,tp,si);
+        $('#filterproduct').modal('hide');
+
+    }
+    function removefilter() {
+        productadd('', 12, 0, 0, 0);
+        $('#FromAge').val(0);
+        $('#ToAge').val(0);
+        $('#minAge').val(0);
+        $('#maxAge').val(10000);
+        $("#ageMin").text(0);
+        $("#ageMax").text(10000)
+        $('#filterproduct').modal('hide');
+        //$('#SubCategoryId').selectpicker('val', null);
+
+        let minRange = parseInt(range[0].value);
+        let maxRange = parseInt(range[1].value);
+        progress.style.left = (minRange / range[0].max) * 100 + "%";
+        progress.style.right = 100 - (maxRange / range[1].max) * 100 + "%";
+        
+    }
+    function productadd(search='',lm=0,fprice=0,tprice=0,subid=0) {
+        $.ajax({
+            type: "get",
+            url: '@Url.Action(Actions.Product_All, Controllers.Products)',
+            data: ({ limit: lm, Search: search, Cat_Id: @ViewBag.Cat_Id, FromPrice: fprice, ToPrice: tprice, Subcat_Id: subid}),
+            dataType: 'json',
+            success: function (response) {
+                limit = lm;
+                var htmlData = "";
+                if (response.Values.length > 0) {
+                    //htmlData += `<div class="shop-page-container mb-50">`
+                    htmlData += `<div class="container">`
+                    htmlData += `<div class="row">`
+                    htmlData += `<div class="col-lg-12 mb-sm-35 mb-xs-40">`
+                    htmlData += `<div class="shop-product-wrap grid row no-gutters mb-20">`
+                    htmlData += `</div>`
+                    htmlData += `</div>`
+                    htmlData += `</div>`
+                    htmlData += `</div>`
+                    //htmlData += `</div>`
+                    for (var i = 0; i < response.Values.length; i++) {
+
+                        htmlData += `<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">`
+                        htmlData += `<div class="gf-product shop-grid-view-product">`
+                        htmlData += `<div class="image">`
+                        htmlData +=  '<a href="/Products/SingleProduct?Product_Id='+response.Values[i].Product_Id+'"> <img src="'+response.Values[i].ImageUrlStr+'" class="img-fluid"style=" height: 150px; width: 275px;" alt=""></a>'
+                        htmlData += ` <div id="cart${response.Values[i].Product_Id}" class="product-hover-icons" style="margin-right:60px ; margin-left:-30px">`
+                        if (response.Values[i].IsInCart == false) {
+                            htmlData += ` <a  data-tooltip="Add to cart" onclick="addToCart('${response.Values[i].Product_Id}');"> <i class="fa fa-shopping-cart mt-2" style="font-size:20px; padding: 3px;"></i></a>`
+                        }
+                        else {
+                            htmlData += ` <a  data-tooltip="Remove from cart"  onclick="removefromCart('${response.Values[i].Product_Id}');"> <i class="fa fa-shopping-cart mt-2" style="font-size:20px; padding: 3px;color:red"></i></a>`
+                        }
+                        htmlData += `</div>`
+                        htmlData += ` <div id="wish${response.Values[i].Product_Id}" class="product-hover-icons"style="margin-left:30px">`
+                        if (response.Values[i].IsInWishlist  == false) {
+                            htmlData += ` <a  data-tooltip="Add to wishlist" onclick="addToWishList('${response.Values[i].Product_Id}');"> <i class="fa fa-heart-o mt-2" style="font-size:20px; padding: 3px;"></i></a>`
+                        }
+                        else {
+                            htmlData += ` <a  data-tooltip="Remove from wishlist" onclick="removefromWishList('${response.Values[i].Product_Id}');"> <i class="fa fa-heart mt-2" style="font-size:20px; padding: 3px;color:red"></i></a>`
+                        }
+                        htmlData += `</div>`
+                        htmlData += `</div>`
+                        htmlData += ` <div class="product-content"> `
+                        htmlData += '<h3 class="product-title"><a href="/Products/SingleProduct?Product_Id='+response.Values[i].Product_Id+'">'+response.Values[i].Name+'</a></h3>'
+                        htmlData += `<div class="price-box"><span >&#8377; ${response.Values[i].Price}</span>
+                                        <p class="product-description" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 13ch;margin: auto;">${response.Values[i].Description}</p>`
+                        htmlData += `</div>`
+                        htmlData += `</div>`
+                        htmlData += `</div>`
+                        htmlData += `</div>`
+                    }
+                    if (response.TotalRecords > limit) {
+                        $("#showmore").html(` <div class="col-lg-12"> <h3 class= "text-center" style="color:#80bb01 !important"> <a onclick="Showmorefunc(); ">Show More</a></h3> </div >`);
+                    }
+                    else {
+                        $("#showmore").html(` <div class="col-lg-12">
+                            <h4 class= "text-center"> No more records found</h4>
+                            </div >`);
+                    }
+                }
+                else {
+
+                    htmlData += '<h5 class="text-center">No Record Found</h5>';
+                }
+
+                $("#ProductItem").html(htmlData);
+            },
+            error: function (error) {
+                console.log('error', error);
+            }
+        })
+    }
+    function Showmorefunc() {
+        limit += 12;
+        productadd('', limit);
+    }
+    function addToWishList(Product_Id) {
+        if (@ProjectSession.Users_Id == 0 || @ProjectSession.Users_Id == null) {
+            window.location.href = '@Url.Action(Actions.Login, Controllers.Myaccount)';
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action(Actions.Wishlist_Upsert, Controllers.Wishlist)',
+                data: { Product_Id: Product_Id },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.Code == 200) {
+                        $("#" + "wish" + Product_Id + "").html(`<a data-tooltip="Remove from wishlist" onclick="removefromWishList('${response.Item.Product_Id}');"> <i class="fa fa-heart mt-2" style="font-size:20px; padding: 3px;color:red"></i></a>`);
+                    }
+                    else {
+                        swal("Error !", response.Message, "error");
+                    }
+                },
+                error: function (error) {
+                    swal("Error !", "Something Went Wrong", "error");
+                }
+            });
+        }
+    }
+    function removefromWishList(Product_Id) {
+        if (@ProjectSession.Users_Id == 0 || @ProjectSession.Users_Id == null) {
+            window.location.href = '@Url.Action(Actions.Login, Controllers.Myaccount)';
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action(Actions.Wishlist_Delete, Controllers.Wishlist)',
+                data: { Product_Id: Product_Id },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.Code == 200) {
+                        $("#" + "wish" + Product_Id + "").html(` <a  data-tooltip="Add to wishlist" onclick="addToWishList('${response.Item.Product_Id}');"> <i class="fa fa-heart-o mt-2" style="font-size:20px; padding: 3px;"></i></a>` );
+                    }
+                    else {
+                        swal("Error !", response.Message, "error");
+                    }
+                },
+                error: function (error) {
+                    swal("Error !", "Something Went Wrong", "error");
+                }
+            });
+        }
+    }
+    function removefromCart(Product_Id) {
+        if (@ProjectSession.Users_Id == 0 || @ProjectSession.Users_Id == null) {
+            window.location.href = '@Url.Action(Actions.Login, Controllers.Myaccount)';
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action(Actions.Cart_Delete, Controllers.Cart)',
+                data: { Product_Id: Product_Id },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.Code == 200) {
+                        $("#" + "cart" + Product_Id + "").html(` <a  data-tooltip="Add to cart" onclick="addToCart('${response.Item.Product_Id}');"> <i class="fa fa-shopping-cart mt-2" style="font-size:20px; padding: 3px;"></i></a>`);
+                    }
+                    else {
+                        swal("Error !", response.Message, "error");
+                    }
+                },
+                error: function (error) {
+                    swal("Error !", "Something Went Wrong", "error");
+                }
+            });
+        }
+    }
+
+
+    function addToCart(Product_Id) {
+        if (@ProjectSession.Users_Id == 0 || @ProjectSession.Users_Id == null) {
+            window.location.href = '@Url.Action(Actions.Login, Controllers.Myaccount)';
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action(Actions.Cart_Upsert, Controllers.Cart)',
+                data: { Product_Id: Product_Id },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.Code == 200) {
+                        $("#" + "cart" + Product_Id + "").html(`<a data-tooltip="Remove from cart" onclick="removefromCart('${response.Item.Product_Id}');"> <i class="fa fa-shopping-cart mt-2" style="font-size:20px; padding: 3px;color:red"></i></a>`);
+                    }
+                    else {
+                        swal("Error !", response.Message, "error");
+                    }
+                },
+                error: function (error) {
+                    swal("Error !", "Something Went Wrong", "error");
+                }
+            });
+        }
+    }
+
+
+</script>

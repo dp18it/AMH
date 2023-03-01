@@ -1,0 +1,214 @@
+﻿@using AMH.Common;
+@using AMH.Pages;
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+}
+
+<style>
+    .a {
+        width: 120px;
+    }
+    .aa {
+        max-width: 70%;
+    }
+   /* .cart-table .table thead tr th {
+        padding: 10px 0px 10px 0px !important;
+    }*/
+</style>
+<body>
+
+    <div class="breadcrumb-area mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="breadcrumb-container">
+                        <ul>
+                            <li><a href="/Home/Index"><i class="fa fa-home"></i>Home</a></li>
+                            <li class="active">Cart</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--=====  End of breadcrumb area  ======-->
+    <!--=============================================
+    =            Cart page content         =
+    =============================================-->
+
+
+    <div class="page-section section mb-50" >
+        <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form action="#" >
+        <!--=======  cart table  =======-->
+                      <div class="cart-table table-responsive mb-40" id="CartItem">
+                      </div>
+                </form>
+        
+                <div class="row">
+                    <div class="col-lg-9 aa">
+                        <!--=======  Cart summery  =======-->
+
+                        <div class="cart-summary">
+                            <div class="cart-summary-wrap align-center" id="summary">
+                                
+                            </div>
+                           
+                        </div>
+
+                    </div>
+
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--=====  End of Footer  ======-->
+    <!-- scroll to top  -->
+    <a href="#" class="scroll-top"></a>
+    <!-- end of scroll to top -->
+    <!-- JS
+    ============================================ -->
+    <!-- jQuery JS -->
+    <script src="~/Theme/assets/js/vendor/jquery.min.js"></script>
+    <!--Popper JS-->
+    <script src="~/Theme/assets/js/popper.min.js"></script>
+    <!--Bootstrap JS-->
+    <script src="~/Theme/assets/js/bootstrap.min.js"></script>
+    <!--Plugins JS-->
+    <script src="~/Theme/assets/js/plugins.js"></script>
+    <script src="~/Theme/assets/css/font-awesome.min.css"></script>
+    <script src="~/Theme/assets/js/main.js"></script>
+    <script>
+        var limit = 0;
+    $(document).ready(function ($) {
+        PId = '@ViewBag.Cat_Id';
+
+        productadd('',0);
+    });
+        function productadd(search,lm) {
+        $.ajax({
+            type: "get",
+            url: '@Url.Action(Actions.Cart_All, Controllers.Cart)',
+            data: ({ limit: lm, Search: search }),
+            dataType: 'json',
+            success: function (response) {
+                limit = lm;
+                var htmlData = "";
+                var summaryData = "";
+                var subtotal = 0;
+                if (response.Values.length > 0) {
+
+                    //htmlData += `<div class="cart-table table-responsive">`
+                    htmlData += `<table class="table">`
+                    htmlData += `  <thead> `
+                    htmlData += `  <tr> `
+                    htmlData += `  <th class="pro-thumbnail aa" height: 160px; width: 117.9px;> Image</th > `
+                    htmlData += `  <th class="pro-title" height: 302.73px; width: 117.9px;>Product</th> `
+                    htmlData += `  <th class="pro-price" height: 140.03px; width: 117.9px;>Price</th> `
+                    htmlData += `  <th class="pro-quantity" height: 194.25px; width: 117.9px;>Quantity</th> `
+                    htmlData += `  <th class="pro-subtotal" height: 143.93px; width: 117.9px;>Total</th> `
+                    htmlData += `  <th class="pro-remove" height: 169.08px; width: 117.9px;>Remove</th> `
+                    htmlData += `  </tr> `
+                    htmlData += `  </thead>`
+                    //htmlData += `</table>`
+                    //htmlData += `</div>`
+                    htmlData += `<div class="container">`
+                    htmlData += `<div class="row">`
+                    htmlData += `<div class="col-12">`
+                    //htmlData += `<table class="table">`
+                    htmlData += `<tbody>`
+
+                    for (var i = 0; i < response.Values.length; i++)
+                    {
+                       
+                        htmlData += ` <tr>`
+                        htmlData += ` <td class="pro-thumbnail" height: 160px; width: 117.9px; ><a><img src="${response.Values[i].ImageUrlStr} "class="img-fluid" alt="product"></a></td>`
+                        htmlData += ' <td class="pro-title" height: 302.73px; width: 117.9px;><a href="/Products/SingleProduct?Product_Id='+response.Values[i].Product_Id+'">'+response.Values[i].Name+'</a></td>'
+                        htmlData += ` <td class="pro-price" height: 140.03px; width: 117.9px;><span>&#8377; ${response.Values[i].Price}</span></td>`
+                        htmlData += ` <td class="pro-quantity" height: 194.25px; width: 117.9px;><div class="pro-qty"><input type="number" id="qnt${response.Values[i].Cart_Id}" ONKEYDOWN="return false" onchange="quntUpdateFunc( ${response.Values[i].Cart_Id}, ${response.Values[i].Product_Id });" Value="${response.Values[i].Quantity}"></div></td>`
+                        htmlData += ` <td class="pro-subtotal"  height: 143.93px; width: 117.9px;><span>&#8377;${response.Values[i].Total}</span></td>`
+                        htmlData += ` <td class="pro-remove" height: 169.08px; width: 117.9px;><a onclick="removefromCart('${response.Values[i].Product_Id}');"><i class="fa fa-trash-o"></i></a></td>`
+                        htmlData += ` </tr>`
+                        subtotal += response.Values[i].Total;
+                    }
+                    htmlData += ` </tbody>`
+                    htmlData += `</table>`
+                    htmlData += `</div>`
+                    htmlData += `</div>`
+                    htmlData += `</div>`
+                    //htmlData += `</div>`
+                     
+                    summaryData += `
+                                <h4>Cart Summary</h4>
+                                <p>Sub Total <span>&#8377; ${subtotal}</span></p>
+                                <p>Shipping Cost <span>&#8377; 100</span></p>
+                                <h2>Grand Total <span>&#8377; ${subtotal + 100}</span></h2>
+                                <div class="cart-summary-button text-center">
+                                       <br/>
+                                    <a href="@Url.Action("Checkout","Cart")" style="color: white; background-color: #80bb01; padding-left: 7px; padding-right : 7px; padding-top:2px; padding-bottom:2px; border-radius:15px;" title="Checkout"><b>Checkout</b></a>
+                                </div>
+
+                            `
+                }
+                else {
+
+                    htmlData += '<h3 class="text-center" style="margin-top: 30;">Your cart is empty</h3></br><a href="/Products/Index" class="slider-btn " style=" margin-left: 450;margin-bottom: 33;">SHOP NOW</a>';
+                }
+
+                $("#CartItem").html(htmlData);
+                $("#summary").html(summaryData);
+            },
+            error: function (error) {
+                console.log('error', error);
+            }
+        })
+
+        }
+        function removefromCart( Product_Id) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action(Actions.Cart_Delete, Controllers.Cart)',
+                data: { Product_Id: Product_Id},
+                dataType: 'json',
+                success: function (response) {
+                    if (response.Code == 200) {
+                        productadd('', 0);
+                    }
+                    else {
+                        swal("Error !", response.Message, "error");
+                    }
+                },
+                error: function (error) {
+                    swal("Error !", "Something Went Wrong", "error");
+                }
+            });
+        }
+        function quntUpdateFunc(CartId, Product_Id) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action(Actions.Cart_Upsert, Controllers.Cart)',
+                data: { Cart_Id: CartId, Product_Id: Product_Id, qunt: $('#' + 'qnt' + CartId).val() },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.Code == 200) {
+                        productadd('', 0);
+                    }
+                    else {
+                        swal("Error !", response.Message, "error");
+                    }
+                },
+                error: function (error) {
+                    swal("Error !", "Something Went Wrong", "error");
+                }
+            });
+        }
+
+    </script>
+</body>

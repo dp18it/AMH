@@ -1,0 +1,290 @@
+﻿@using AMH.Common;
+@using AMH.Pages;
+@{
+    ViewBag.Title = "Contactus";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<body>
+
+    <div class="breadcrumb-area mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="breadcrumb-container">
+                        <ul>
+                            <li><a href="/Home/Index"><i class="fa fa-home"></i>Home</a></li>
+
+                            <li class="active"><a href="Home/Contactus/Index">About Us</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-content mb-50">
+        <div class="container">
+            <div class="row">
+                    <div class="contact-page-side-content">
+                        <h3 class="contact-page-title">About Us</h3>
+                        <p>Agric Machienery is an <strong>online</strong>&nbsp;<strong>agricultural market</strong>&nbsp;and platform that offers a modern retail experience to Indian farmers. At Agric Machienery, you get easy access to an <strong>online farmers’ store</strong>&nbsp;as well as to services like charcha manch, free soil testing, and a lot more.</p>
+                        <!--=======  single contact block  =======-->
+                        <p>Choose from a wide range of seeds, fertilisers, pesticides, cattle feed, bio-stimulants, sprayers, and other agricultural implements and <strong>farm products online</strong> with ease.</p>
+                        <p>&nbsp;</p>
+                        <h2>The Establishment of the Online Agri Store</h2>
+                        <p>With an aim to connect all the farmers and cooperative societies in India, IFFCO, one of the largest cooperatives in the world, launched “www.iffcobazar.in” <strong>Agri e-commerce store</strong>. The platform was launched in line with the government’s initiative of ‘Digital India’. It offers the perfect platform that allows for seamless communication and commerce between IFFCO and its Joint Ventures, with consumers, and between various societies.</p>
+                        <p>The platform is available in 12 different regional languages including English and Hindi which ensures effortless connectivity between rural India and the rest of the country.</p>
+                        <p>In order to empower the farmers of the country in having more control over the commercial aspect of their businesses, this <strong>online Agri store </strong>also offers several benefits like the free home delivery scheme, Cash on delivery and no minimum order value for the rural areas of India.</p>
+                        <p>&nbsp;</p>
+                        <h2>Features of Agric Machienery</h2>
+                        <p>Designed to offer complete convenience to Indian farmers and rural societies in the country, Agric Machienery is available in 12 regional languages. This includes Hindi, English, Bengali, Marathi, Gujarati, Punjabi, Telugu, Tamil, Kannada, Malayalam, Assamese, and Oriya. The availability in regional languages helps ensure a wide reach for the <strong>online Agri store</strong>&nbsp;and makes it exceedingly easy for people to <strong>buy farm products online</strong>&nbsp;from wherever they are.</p>
+                        <p>&nbsp;</p>
+                        <p>One of the best <strong>online shopping websites </strong>for <strong>agriculture</strong>,<strong>&nbsp;</strong>people also get access to discussion forums where they can easily ask questions or share ideas and best practices. The forum also has facilities that allow commenting and voting to ensure an interactive experience for everyone.</p>
+                        <p>&nbsp;</p>
+                        <p>A very important feature of the Agric Machienery platform and its <strong>online farmers’ store </strong>is KisanMitr –Friends of the Farmers Project. An initiative by the Office of the Principal Scientific Adviser, Government of India, the project is aimed at helping Indian farmers become more self-reliant, offering them insights and recommendations that are based on information gleaned from numerous data sources from various departments of the Government.</p>
+                        <h2>About Payments at Agric Machienery</h2>
+                        <p>One of the top <strong>online shopping websites </strong>for <strong>agricultural uses</strong>, Agric Machienery offers Cash on Delivery along with safe and secure avenues for processing online payments, including credit or debit card and internet banking. Agric Machienery guarantees completely safe transactions and confidentiality for your payment information. With these features and much more, we are dedicated to offer the best services to Indian farmers, empowering them to take control of their business. Owing to this, Agric Machienery has become the top <strong>online agricultural market </strong>in India in the short time since its establishment.</p>
+                    </div>
+
+                    <!--=======  End of contact form content =======-->
+               
+            </div>
+        </div>
+    </div>
+
+  
+    <!-- scroll to top  -->
+    <a href="#" class="scroll-top"></a>
+    <!-- end of scroll to top -->
+    <!-- JS
+    ============================================ -->
+    <!-- jQuery JS -->
+    <script src="assets/js/vendor/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="assets/js/popper.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="assets/js/bootstrap.min.js"></script>
+
+    <!-- Plugins JS -->
+    <script src="assets/js/plugins.js"></script>
+
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
+
+    <!-- AJAX mail JS -->
+    <script src="assets/js/ajax-mail.js"></script>
+
+
+    <!-- Google Map -->
+    <script src="https://maps.google.com/maps/api/js?sensor=false&amp;libraries=geometry&amp;v=3.22&amp;key=AIzaSyDAq7MrCR1A2qIShmjbtLHSKjcEIEBEEwM"></script>
+
+    <script>
+        // When the window has finished loading create our google map below
+        google.maps.event.addDomListener(window, 'load', init);
+
+        function init() {
+            // Basic options for a simple Google Map
+            // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
+            var mapOptions = {
+                // How zoomed in you want the map to start at (always required)
+                zoom: 12,
+
+                scrollwheel: false,
+
+                // The latitude and longitude to center the map (always required)
+                center: new google.maps.LatLng(40.740610, -73.935242), // New York
+
+                // How you would like to style the map.
+                // This is where you would paste any style found on
+
+                styles: [{
+                    "featureType": "water",
+                    "elementType": "geometry",
+                    "stylers": [{
+                        "color": "#e9e9e9"
+                    },
+                    {
+                        "lightness": 17
+                    }
+                    ]
+                },
+                {
+                    "featureType": "landscape",
+                    "elementType": "geometry",
+                    "stylers": [{
+                        "color": "#f5f5f5"
+                    },
+                    {
+                        "lightness": 20
+                    }
+                    ]
+                },
+                {
+                    "featureType": "road.highway",
+                    "elementType": "geometry.fill",
+                    "stylers": [{
+                        "color": "#ffffff"
+                    },
+                    {
+                        "lightness": 17
+                    }
+                    ]
+                },
+                {
+                    "featureType": "road.highway",
+                    "elementType": "geometry.stroke",
+                    "stylers": [{
+                        "color": "#ffffff"
+                    },
+                    {
+                        "lightness": 29
+                    },
+                    {
+                        "weight": 0.2
+                    }
+                    ]
+                },
+                {
+                    "featureType": "road.arterial",
+                    "elementType": "geometry",
+                    "stylers": [{
+                        "color": "#ffffff"
+                    },
+                    {
+                        "lightness": 18
+                    }
+                    ]
+                },
+                {
+                    "featureType": "road.local",
+                    "elementType": "geometry",
+                    "stylers": [{
+                        "color": "#ffffff"
+                    },
+                    {
+                        "lightness": 16
+                    }
+                    ]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "geometry",
+                    "stylers": [{
+                        "color": "#f5f5f5"
+                    },
+                    {
+                        "lightness": 21
+                    }
+                    ]
+                },
+                {
+                    "featureType": "poi.park",
+                    "elementType": "geometry",
+                    "stylers": [{
+                        "color": "#dedede"
+                    },
+                    {
+                        "lightness": 21
+                    }
+                    ]
+                },
+                {
+                    "elementType": "labels.text.stroke",
+                    "stylers": [{
+                        "visibility": "on"
+                    },
+                    {
+                        "color": "#ffffff"
+                    },
+                    {
+                        "lightness": 16
+                    }
+                    ]
+                },
+                {
+                    "elementType": "labels.text.fill",
+                    "stylers": [{
+                        "saturation": 36
+                    },
+                    {
+                        "color": "#333333"
+                    },
+                    {
+                        "lightness": 40
+                    }
+                    ]
+                },
+                {
+                    "elementType": "labels.icon",
+                    "stylers": [{
+                        "visibility": "off"
+                    }]
+                },
+                {
+                    "featureType": "transit",
+                    "elementType": "geometry",
+                    "stylers": [{
+                        "color": "#f2f2f2"
+                    },
+                    {
+                        "lightness": 19
+                    }
+                    ]
+                },
+                {
+                    "featureType": "administrative",
+                    "elementType": "geometry.fill",
+                    "stylers": [{
+                        "color": "#fefefe"
+                    },
+                    {
+                        "lightness": 20
+                    }
+                    ]
+                },
+                {
+                    "featureType": "administrative",
+                    "elementType": "geometry.stroke",
+                    "stylers": [{
+                        "color": "#fefefe"
+                    },
+                    {
+                        "lightness": 17
+                    },
+                    {
+                        "weight": 1.2
+                    }
+                    ]
+                }
+                ]
+            };
+
+            // Get the HTML DOM element that will contain your map
+            // We are using a div with id="map" seen below in the <body>
+            var mapElement = document.getElementById('google-map');
+
+            // Create the Google Map using our element and options defined above
+            var map = new google.maps.Map(mapElement, mapOptions);
+
+            // Let's also add a marker while we're at it
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(40.740610, -73.935242),
+                map: map,
+                title: 'Greenfarm',
+                icon: "assets/images/icons/map-marker.png",
+                animation: google.maps.Animation.BOUNCE
+            });
+        }
+
+         $(document).ready(function ($) {
+            $('#menu3').addClass('active');
+             $('#menu1').removeClass('active');
+             $('#menu2').removeClass('active');
+    });
+    </script>
+
+</body>

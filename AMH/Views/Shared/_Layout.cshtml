@@ -1,0 +1,389 @@
+﻿@using AMH.Common;
+@using AMH.Pages;
+@using System.Web.Optimization;
+@{ /**/
+
+    var curController = Convert.ToString(ViewContext.RouteData.Values["Controller"]);
+    var curAction = Convert.ToString(ViewContext.RouteData.Values["Action"]);
+}
+<style>
+    /*.aa {
+        width: 200px;
+        height: 200px;
+    }*/
+    .aa {
+        width: 150px;
+        height: auto;
+    }
+    .ff:link {
+        color: green;
+    }
+    .lowercase {
+  text-transform: lowercase;
+    }
+    
+
+</style>
+<!-- Mirrored from demo.hasthemes.com/greenfarm-preview/greenfarm/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 Dec 2019 15:16:23 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Agric - Machienary and Health</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="icon" href="~/theme/assets/images/logo2.ico">
+
+    <!-- CSS
+    ============================================ -->
+    <!-- Bootstrap CSS -->
+    @*<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">*@
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="~/assets/fonts/style.css">
+    @*<link rel="stylesheet" href="~/assets/vendors/simplebar/dist/simplebar.min.css">*@
+    @*<link rel="stylesheet" href="~/assets/vendors/daterangepicker/daterangepicker.css">*@
+    @*<link rel="stylesheet" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.25/b-1.7.1/b-html5-1.7.1/b-print-1.7.1/r-2.2.9/datatables.min.css" />*@
+
+    <link rel="stylesheet" href="~/assets/css/main.min.css">
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <link href="~/Theme/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- FontAwesome CSS -->
+    <link href="~/Theme/assets/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Elegent CSS -->
+    <link href="~/Theme/assets/css/elegent.min.css" rel="stylesheet">
+
+    <!-- Plugins CSS -->
+    <link href="~/Theme/assets/css/plugins.css" rel="stylesheet">
+
+    <!-- Helper CSS -->
+    <link href="~/Theme/assets/css/helper.css" rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link href="~/Theme/assets/css/main.css" rel="stylesheet">
+
+    <!-- Modernizer JS -->
+
+
+
+</head>
+<header>
+    <!--=======  header top  =======-->
+
+    <div class="header-top pt-10 pb-10 pt-lg-10 pb-lg-10 pt-md-10 pb-md-10">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center text-sm-left">
+
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  text-center text-sm-right">
+                    <!-- header top menu -->
+                    <div class="header-top-menu">
+                        <ul>
+                            <li><a href="/Myaccount/Index">My account</a></li>
+                            <li><a href="/Wishlist/Index">Wishlist</a></li>
+                            
+                            @if (ProjectSession.Users_Id == 0 || ProjectSession.Users_Id == null)
+                            {
+                                <li><a href="@Url.Action("Login","Myaccount")">Login</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="@Url.Action("User_SignOut","Myaccount")">Logout</a></li>
+
+                            }
+
+                        </ul>
+                    </div>
+                    <!-- end of header top menu -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--=======  End of header top  =======-->
+    <!--=======  header bottom  =======-->
+
+    <div class="header-bottom header-bottom-one header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-10 col-xs-10 text-lg-left text-md-center text-sm-center">
+                    <!-- logo -->
+                    <div class="logo mt-10 mb-10">
+                        <a href="index.html">
+                            <img src="~/Theme/assets/images/logo.png" class="img-fluid" alt="">
+                        </a>
+                    </div>
+                    <!-- end of logo -->
+                </div>
+                <div class="col-md-9 col-sm-12 col-xs-12">
+                    <div class="menubar-top d-flex justify-content-between align-items-center flex-sm-wrap flex-md-wrap flex-lg-nowrap mt-sm-15">
+                        <!-- header phone number -->
+                        <div class="header-contact d-flex">
+                            <div class="phone-icon">
+                                <img src="~/Theme/assets/images/icon-phone.png" class="img-fluid" alt="">
+                            </div>
+                            <div class="phone-number">
+                                Phone:<span class="number">
+                                <a style="margin-bottom: -1px;" href="tel:8160984806">8160984806</a><br />
+                                </span>
+                            </div>
+                        </div>
+                        <!-- end of header phone number -->
+                        <!-- search bar -->
+                        <div class="header-advance-search">
+                            <form action="#">
+                                <input type="text" id="Search" placeholder="Search your product">
+                                <button>@*<span class="icon_search" onclick="location.href = '@Url.Action("Index","Products")';"></span>*@</button>
+                                <button type="button" onclick="productpage();"><span class="icon_search"></span></button>
+                                @*<a href="@Url.Action("Index","Products")" style=" position: absolute; padding: 1px 6px;text-indent: 0px; writing-mode: horizontal-tb !important; text-rendering: auto; text-align: center;  cursor: pointer; right: 5px; top: 5px; background: none; border: none; background-color: #80bb01; color: #ffffff; width: 40px; height: 40px; border-radius: 50%;"><span class="icon_search"></span></a>*@
+                            </form>
+                        </div>
+                        <!-- end of search bar -->
+                        <!-- shopping cart -->
+                        <div class="shopping-cart" id="shopping-cart">
+                            <a href="/Cart/Index">
+                                <div class="cart-icon d-inline-block">
+                                    <span class="fa fa-shopping-cart"></span>
+                                    <h5><b style="color: #666666; margin-left: 6px; ">Cart</b></h5>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <!-- navigation section -->
+                    <div class="main-menu">
+                        <nav>
+                            <ul>
+                                <li class=" menu-item" id="menu1">
+                                    <a href="/Home/Index">HOME</a>
+                                </li>
+
+                                <li class=" menu-item" id="menu2" >
+                                    <a href="@Url.Action("Index","Products")">Product</a>
+                                   
+                                </li>
+
+                                <li class=" menu-item" id="menu3">
+                                    <a href="@Url.Action("Index","Contactus")" >About Us</a>
+                                </li>
+                                <li class=" menu-item">
+                                    <a href="https://farmer.indiancst.com/" target="_blank">Kisan Mitra</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- end of navigation section -->
+                </div>
+                <div class="col-12">
+                    <!-- Mobile Menu -->
+                    <div class="mobile-menu d-block d-lg-none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--=======  End of header bottom  =======-->
+</header>
+
+<script>
+    function productpage(){
+        window.location.href = '@Url.Action(Actions.Index, Controllers.Products)?srech=' + $("#Search").val() +'';
+    };
+</script>
+@*<script src="~/assets/vendors/jquery/dist/jquery.min.js"></script>*@
+@*<script src="~/assets/js/jquery.validate.js"></script>*@
+@*<script src="~/assets/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
+@*<script src="~/assets/vendors/simplebar/dist/simplebar.min.js"></script>*@
+@*<script src="~/assets/vendors/daterangepicker/moment.min.js"></script>*@
+@*<script src="~/assets/vendors/daterangepicker/daterangepicker.js"></script>*@
+@*<script src="~/assets/vendors/apexcharts/dist/apexcharts.min.js"></script>*@
+<script src="~/Theme/assets/js/vendor/modernizr-2.8.3.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+@*<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.25/b-1.7.1/b-html5-1.7.1/b-print-1.7.1/r-2.2.9/datatables.min.js"></script>*@
+<!-- Main Js -->
+@*<script src="~/assets/js/main.min.js"></script>*@
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- JS
+  ============================================ -->
+<!-- jQuery JS -->
+<script src="~/Theme/assets/js/vendor/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="~/Theme/assets/js/popper.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="~/Theme/assets/js/bootstrap.min.js"></script>
+
+<!-- Plugins JS -->
+<script src="~/Theme/assets/js/plugins.js"></script>
+
+<!-- Main JS -->
+<script src="~/Theme/assets/js/main.js"></script>
+<main>
+    @RenderBody()
+</main>
+
+<footer>
+
+    <div class="newsletter-section pt-50 pb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-12 order-2 order-md-2 order-sm-2 order-lg-1"></div>
+            </div>
+        </div>
+    </div>
+
+    <center>
+        <div class="footer-navigation-section pt-40 pb-40">
+            <h1 style="margin-bottom: 40px;">
+                Contact us
+            </h1>
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
+
+                        <div class="single-navigation-section">
+                            <h3 class="nav-section-title" style="margin-left: 20px;">Address</h3>
+                            <ul>
+                                <li> <a style="margin-left: 20px;">A-502 Abhilasha Sky, oppo. Suncity bunglows, Near Gopal Chawk,Ahmedabad- 382350</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
+
+                        <!--=======  single navigation section  =======-->
+
+                        <div class="single-navigation-section" bb>
+                            <h3 class="nav-section-title" style="margin-left: 75px;">
+                                Email
+                            </h3>
+                            <a style="margin-left: 75px;" class="lowercase" href="mailto:agricpower@gmail.com"><l>agricpower@gmail.com</l></a>
+                            <a style="margin-left: 75px;" class="lowercase" href="mailto:dishazalavadiya6@gmail.com">dishazalavadiya6@gmail.com</a>
+                            <a style="margin-left: 75px;" class="lowercase" href="mailto:mahimasuhagiya@gmail.com">mahimasuhagiya@gmail.com</a>
+                            <a style="margin-left: 75px;" class="lowercase" href="mailto:parmarmansi@gmail.com">parmarmansi@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
+
+                        <!--=======  single navigation section  =======-->
+
+                        <div class="single-navigation-section">
+                            <h3 class="nav-section-title">Phone</h3>
+                            <a style="margin-bottom: -1px;" href="tel:8160984806">+91- 8160984806</a><br />
+                            <a style="margin-bottom: -1px;" href="tel:7862807725">+91- 7862807725</a><br />
+                            <a style="margin-bottom: -1px;" href="tel:9081365676">+91- 9081365676</a>
+                        </div>
+
+                        <!--=======  End of single navigation section  =======-->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!--=======  End of social contact section  =======-->
+        <!--=======  footer navigation  =======-->
+
+        <div class="footer-navigation-section pt-40 pb-40">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
+
+                        <!--=======  single navigation section  =======-->
+
+                        <div class="single-navigation-section">
+                            <h3 class="nav-section-title" style="margin-left: 20px;">INFORMATION</h3>
+                            <ul>
+                                <li> <a href="/Contactus/Index" style=" margin-left: 20px;">About Us</a></li>
+                                <li> <a href="/PrivacyPolicy/Index" style=" margin-left: 20px;">Privacy Policy</a></li>
+                                <li> <a href="/TermsandCondition/Index" style=" margin-left: 20px;">Terms & Condition</a></li>
+                            </ul>
+                        </div>
+
+                        <!--=======  End of single navigation section  =======-->
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
+
+                        <!--=======  single navigation section  =======-->
+
+                        <div class="single-navigation-section">
+                            <h3 class="nav-section-title" style="margin-left: 75px;">MY ACCOUNT</h3>
+                            <ul>
+                                <li> <a href="/Myaccount/Index" style="margin-left: 75px;">My Account</a></li>
+                                <li> <a href="/Wishlist/Index" style="margin-left: 75px;">Wishlist</a></li>
+                                <li> <a href="/Cart/Index" style="margin-left: 75px;">Shopping Cart</a></li>
+
+                            </ul>
+                        </div>
+
+                        <!--=======  End of single navigation section  =======-->
+                    </div>
+                    <!--<div class="col-lg-4 col-md-3 col-sm-6 col-xs-12 mb-xs-30">-->
+
+                        <!--=======  single navigation section  =======-->
+
+                        <!--<div class="single-navigation-section">
+                            <h3 class="nav-section-title">CUSTOMER SERVICE</h3>
+                            <ul>
+                                <li> <a href="/Home/Index">Contact</a></li>
+
+                            </ul>
+                        </div>-->
+
+                        <!--=======  End of single navigation section  =======-->
+                    <!--</div>-->
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <!--=======  single navigation section  =======-->
+                        <!--=======  End of single navigation section  =======-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
+    <!--=======  End of footer navigation  =======-->
+    <!--=======  copyright section  =======-->
+
+    <div class="copyright-section pt-35 pb-35">
+        <div class="container">
+            <div class="row align-items-md-center align-items-sm-center">
+                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 text-center text-md-left">
+                    <!--=======  copyright text	  =======-->
+
+                    <div class="copyright-segment">
+                        <p>
+                            <a href="/PrivacyPolicy/Index">Privacy Policy</a>
+                            <span class="separator">|</span>
+                            <a href="/TermsandCondition/Index">Term and conditions</a>
+                        </p>
+                        <p class="copyright-text">&copy; 2023 <a href="https://localhost:44354/Home/Index">Agric Machienery and Health</a>. All Rights Reserved</p>
+                    </div>
+
+                    <!--=======  End of copyright text	  =======-->
+
+                </div>
+                <div class="col-lg-8 col-md-6 col-sm-12 col-xs-12">
+                    <!--=======  payment info  =======-->
+
+                    @*<div class="payment-info text-center text-md-right">
+                        <p>Allow payment base on <img src="assets/images/payment-icon.png" class="img-fluid" alt=""></p>
+                    </div>*@
+
+                    <!--=======  End of payment info  =======-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--=======  End of copyright section  =======-->
+</footer>
+
+

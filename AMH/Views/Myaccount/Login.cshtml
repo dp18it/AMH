@@ -1,0 +1,212 @@
+﻿@using AMH.Common;
+@using AMH.Pages;
+@{
+    //ViewBag.Title = "Login";
+}
+<style>
+    .aa {
+        text-align: center;
+    }
+</style>
+<body>
+
+    <div class="breadcrumb-area mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="breadcrumb-container">
+                        <ul>
+                            @*<li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>*@
+                            <li class="active">Login</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--=====  End of breadcrumb area  ======-->
+    <!--=============================================
+    =            Login register page content         =
+    =============================================-->
+
+    <div class="page-content mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                </div>
+                <div class="col-lg-6">
+                    <!-- Login Form s-->
+                    <form action="" method="post" id="frmLogin">
+
+                        <div class="login-form">
+                            <h4 class="login-title">Login</h4>
+
+                            <div class="row">
+                                <div class="col-md-12 col-12 mb-20">
+                                    <label>Email Address*</label>
+                                    <input class="mb-0" id="Email" name="Email" type="email" placeholder="Email Address">
+                                </div>
+                                <div class="col-12 mb-20">
+                                    <label>Password*</label>
+                                    <input class="mb-0" id="Password" name="Password" type="password" placeholder="Password">
+                                    <label>Show Password <input type="checkbox" id="passwordCheckbox"></label>
+                                </div>
+                                <div class="col-md-8">
+
+                                </div>
+
+                                <div class="col-md-4 mt-10 mb-20 text-left text-md-right">
+                                    <a href="/Myaccount/ForgotPassword"> Forgotten pasward?</a>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <button type="submit" id="btnLogin" class="register-button mt-0">Login</button>
+                                </div>
+                                <div class="col-md-8">
+
+                                </div>
+                                <div class="col-md-4 mt-10 mb-20 text-left text-md-right">
+                                </div>
+
+                                <div class="col-12 mt-20 aa ">
+                                    <a href="/Myaccount/Register"><b>Register Now</b></a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="col-lg-3">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" class="scroll-top"></a>
+    <!-- end of scroll to top -->
+    <!-- JS
+    ============================================ -->
+
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon">
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>*@
+    @*<script src="~/assets/validation/js/jquery.min.js"></script>*@
+    <script src="~/assets/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <!--<script src="~/assets/validation/js/bootstrap.min.js"></script>
+    <script src="~/assets/validation/js/jquery.blockui.min.js"></script>-->
+    @*<script src="~/assets/vendor/dropify/js/dropify.min.js"></script>
+        <script src="~/assets/js/pages/forms/dropify.js"></script>*@
+    <!--<script src="~/assets/validation/js/jquery-ui.min.js"></script>
+    <script src="~/assets/validation/js/datatable.js"></script>
+    <script src="~/assets/validation/js/datatables.min.js"></script>
+    <script src="~/assets/validation/js/datatables.bootstrap.js"></script>
+    <script src="~/assets/validation/js/select2.full.min.js"></script>
+    <script src="~/assets/validation/js/app.min.js"></script>-->
+    @*<script src="~/assets/validation/js/ui-modals.min.js"></script>*@
+    @*<script src="~/assets/validation/js/table-datatables-buttons.min.js"></script>*@
+    <!--<script src="~/assets/validation/js/components-bootstrap-switch.min.js"></script>
+    <script src="~/assets/validation/js/components-select2.min.js"></script>
+    <script src="~/assets/validation/js/moment.min.js"></script>
+    <script src="~/assets/validation/js/moment-with-locales.min.js"></script>
+    <script src="~/assets/validation/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/assets/validation/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/assets/validation/js/jquery.validate.min.js"></script>
+    <script src="~/assets/validation/js/additional-methods.min.js"></script>
+    <script src="~/assets/validation/js/toastr.min.js"></script>
+    <script src="~/assets/validation/js/ui-toastr.min.js"></script>
+    <script src="~/assets/validation/js/layout.min.js"></script>
+    <script src="~/assets/validation/js/demo.min.js"></script>
+    <script src="~/assets/validation/js/quick-sidebar.min.js"></script>
+    <script src="~/assets/validation/js/quick-nav.min.js"></script>
+    <script src="~/assets/validation/js/common.js"></script>-->
+    <script>
+
+        $("#frmLogin").validate({
+            rules: {
+                Email: {
+                    required: true,
+                },
+                Password: {
+                    required: true,
+                }
+            },
+            messages: {
+                Email: {
+                    required: "Email is required",
+                },
+                Password: {
+                    required: "Password is required",
+                }
+            },
+
+            errorPlacement: function (error, element) {
+                if (element.is(":radio")) {
+                    error.appendTo(element.parents(".form-group"));
+                } else {
+                    // This is the default behavior
+                    error.insertAfter(element);
+                }
+            },
+            submitHandler: function (form) {
+                loginfunc();
+            }
+        });
+
+        function loginfunc() {
+              $("#btnLogin").hide();
+                        $("#btnLoginLoading").show();
+                        $.ajax({
+                            url: '@Url.Action(Actions.User_SignIn, Controllers.Myaccount)',
+                            data: { Email: $("#Email").val(), Password: $("#Password").val() },
+                            type: "POST",
+                            dataType: "json",
+                            success: function (result) {
+                               /* $("#wrgMsg").hide();*/
+                                if (result.Code == 200) {
+                                    window.location.href = '@Url.Action(Actions.Index,Controllers.Home)';
+                                } else if (result.Code == 400 || result.Code == 403 || result.Code == 404) {
+                                    $("#btnLogin").show();
+                                    $("#wrgMsg").text(result.Message)
+                                    swal({
+                                        title: "warning",
+                                        text: result.Message,
+                                        icon: "warning",
+                                        timer: 3000
+                                    })
+                                    $("#wrgMsg").show();
+                                    $("#btnLoginLoading").hide();
+                                } else {
+                                    $("#btnLogin").show();
+                                    $("#wrgMsg").text("An error occured !")
+                                    swal({
+                                        title: "warning",
+                                        text: "An error occured !",
+                                        icon: "warning",
+                                        timer: 3000
+                                    })
+                                    $("#wrgMsg").show();
+                                    $("#btnLoginLoading").hide();
+                                }
+                            },
+                            error: function (result) {
+                                $("#btnLogin").show();
+                                $("#wrgMsg").text("An error occured !")
+                                $("#wrgMsg").show();
+                                $("#btnLoginLoading").hide();
+                            }
+                        });
+        }
+
+
+        $('#passwordCheckbox').change(function () {
+            if ($(this).is(':checked')) {
+                $('input[type="password"]').prop('type', 'text');
+
+            } else {
+                $('#Password').prop('type', 'password');
+            }
+        });
+    </script>
+</body>

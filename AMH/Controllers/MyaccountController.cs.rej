@@ -1,0 +1,9 @@
+diff a/AMH/Controllers/MyaccountController.cs b/AMH/Controllers/MyaccountController.cs	(rejected hunks)
+@@ -174,7 +174,6 @@
+         }
+ 
+         [HttpPost]
+-        public JsonResult Users_ById(int Id=0)
+         public JsonResult Users_ById(int Users_Id = 0)
+         {
+             SuccessResult<AbstractUsers> successResult = abstractUsersServices.Users_ById(Users_Id);

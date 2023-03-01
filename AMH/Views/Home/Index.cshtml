@@ -1,0 +1,139 @@
+﻿@using AMH.Common;
+@using AMH.Pages;
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    /* .aaaa{
+        margin-top: 18px;
+    }*/
+</style>
+<body>
+
+    <div class="hero-slider-container mb-35">
+        <!--=======  Slider area  =======-->
+
+        <div class="hero-slider-one">
+            <!--=======  hero slider item  =======-->
+
+            <div class="hero-slider-item slider-bg-7">
+                <div class="slider-content d-flex flex-column justify-content-center align-items-center">
+                    <h1>Agric</h1>
+                    <p>Machienary and Health</p>
+                    <a href="/Products/Index" class="slider-btn">SHOP NOW</a>
+                </div>
+            </div>
+
+            <!--=======  End of hero slider item  =======-->
+            <!--=======  Hero slider item  =======-->
+
+            <div class="hero-slider-item slider-bg-8">
+                <div class="slider-content d-flex flex-column justify-content-center align-items-center">
+                    <h1>Machienary & Health</h1>
+                    <p>get agriculture related product at your doorstep</p>
+                    <a href="/Products/Index" class="slider-btn">SHOP NOW</a>
+                </div>
+            </div>
+
+            <!--=======  End of Hero slider item  =======-->
+
+        </div>
+
+        <!--=======  End of Slider area  =======-->
+
+    </div>
+
+
+    <div class="slider category-slider mb-35">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!--=======  category slider section title  =======-->
+
+                    <div class="section-title">
+                        <h3>categories</h3>
+                    </div>
+
+                    <!--=======  End of category slider section title  =======-->
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <!--=======  category container  =======-->
+
+                    <div class="category-slider-container">
+                        
+                        <!--=======  single category  =======-->
+
+                        <div class="single-category ml-3">
+                            <div class="category-image">
+                               @* <a href="@Url.Action("Index","Products")" title="Machienary">*@
+                                    <a href="/Products/Index?Cat_Id=1" title="Machienary">
+                                        @*+ "response.Values[i].Cat_Id + '&type=Cat_Id*@
+                                        <img src="~/Theme/assets/images/categories/Agricultural_machinery.jpg" style="height: 120px;" class="img-fluid" alt="">
+                                    </a>
+                            </div>
+
+                            <div class="category-title">
+                                <h3>
+                                    <a href="/Products/Index?Cat_Id=1"> Machienary</a>
+                                </h3>
+                            </div>
+                        </div>
+
+                        <div class="single-category ml-3">
+                            <div class="category-image">
+                                <a href="/Products/Index?Cat_Id=2" title="Furtilizer">
+                                    <img src="~/Theme/assets/images/categories/furtilizer.jpg" style="height: 120px;" class="img-fluid" alt="">
+                                </a>
+                            </div>
+                            <div class="category-title">
+                                <h3>
+                                    <a href="/Products/Index?Cat_Id=2"> Furtilizer</a>
+                                </h3>
+                            </div>
+                        </div>
+
+                        <div class="single-category ml-3">
+                            <div class="category-image">
+                                <a href="/Products/Index?Cat_Id=3" title="Seed">
+                                    <img src="~/Theme/assets/images/categories/seed.jpg" style="height: 120px;" class="img-fluid" alt="">
+                                </a>
+                            </div>
+                            <div class="category-title">
+                                <h3>
+                                    <a href="/Products/Index?Cat_Id=3"> Seed</a>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function ($) {
+        $('#menu1').addClass('active');
+        $('#menu2').removeClass('active');
+        $('#menu3').removeClass('active');
+    });
+    </script>
+
+   
+    <script src="~/Theme/assets/js/vendor/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="~/Theme/assets/js/popper.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="~/Theme/assets/js/bootstrap.min.js"></script>
+
+    <!-- Plugins JS -->
+    <script src="~/Theme/assets/js/plugins.js"></script>
+
+    <!-- Main JS -->
+    <script src="~/Theme/assets/js/main.js"></script>
+</body>

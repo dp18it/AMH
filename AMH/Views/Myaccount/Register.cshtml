@@ -1,0 +1,337 @@
+﻿@using AMH.Common;
+@using AMH.Pages;
+@{
+    ViewBag.Title = "Register";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .bb {
+        align-content: center;
+    }
+</style>
+
+<body>
+
+    <div class="breadcrumb-area mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="breadcrumb-container">
+                        <ul>
+                            @* <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>*@
+                            <li class="active">Register</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-content mb-0">
+        <div class="container  ">
+            <div class="row">
+                @*<div class="col-lg-2">
+                    </div>*@
+                <div class="col-lg-12">
+                    <form method="post" id="addUser">
+
+                        <div class="login-form ">
+                            <h4 class="login-title text-center">Register</h4>
+
+                            <div class="row">
+                                <div class="col-md-4 col-12 mb-20">
+                                </div>
+                                <div class="col-md-4 col-12 mb-20">
+                                    <label for="Photo">Profile Image</label>
+                                    <div class="form-group">
+                                        <input type="file" onchange="readURL(this)" style="border: 0px" id="ProfileImg" name="ProfileImg">
+                                        <img id="ImageView" style="width: 70% !important" height="130px" class="form-control-file " />
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-12 mb-20">
+                                </div>
+                                <div class="col-md-6 col-12 mb-20">
+                                    <label>First Name</label>
+                                    <input class="mb-0" id="FirstName" Name="FirstName" type="text" placeholder="First Name">
+                                </div>
+                                <div class="col-md-6 col-12 mb-20">
+                                    <label>Last Name</label>
+                                    <input class="mb-0" id="LastName" Name="LastName" type="text" placeholder="Last Name">
+                                </div>
+
+                                <div class="col-md-6 mb-20">
+                                    <label>Birth Date</label>
+                                    <input class="mb-0" type="date" id="BirthDate" Name="BirthDate" placeholder="Select your birthdate">
+                                </div>
+                                <div class="col-md-6 mb-20">
+                                    <label>Contact Number</label>
+                                    <input class="mb-0" type="number" id="ContactNo" Name="ContactNo" placeholder="Contact number">
+                                </div>
+                                <div class="col-md-6 mb-20">
+                                    <label>Address Line 1</label>
+                                    <textarea class="mb-0" cols="64" id="Address1" Name="Address1" placeholder="House No/,Socity/Bulding Name"></textarea>
+                                </div>
+                                <div class="col-md-6 mb-20">
+                                    <label>Address Line 2(Optional)</label>
+                                    <textarea class="mb-0" cols="64" id="Address2" Name="Address2" placeholder="Near by place/ Area"></textarea>
+                                </div>
+                                <div class="col-md-4 mb-20">
+                                    <label>State</label>
+                                    @Html.Raw(Html.DropDownList("StateId", (IEnumerable<SelectListItem>)ViewBag.StateAll, new { @Id = "StateId", @class = "form-control" }))
+                                </div>
+                                <div class="col-md-4 mb-20">
+                                    <label>City</label>
+                                    @Html.Raw(Html.DropDownList("CityId", (IEnumerable<SelectListItem>)ViewBag.CityAll, new { @Id = "CityId", @class = "form-control" }))
+                                </div>
+                                <div class="col-md-4 mb-20">
+                                    <label>PinCode</label>
+                                    <input class="mb-0" type="number" id="PinCode" Name="PinCode" placeholder="Pincode">
+                                </div>
+                                <div class="col-md-12 mb-20">
+                                    <label> Email Address</label>
+                                    <input class="mb-0" type="email" id="Email" Name="Email" placeholder="Email Address ">
+                                </div>
+                                <div class="col-md-6 mb-20">
+                                    <label>Password</label>
+                                    <input class="mb-0" type="password" id="Password" Name="Password" placeholder="Password">
+                                </div>
+                                <div class="col-md-6 mb-20">
+                                    <label>Confirm Password</label>
+                                    <input class="mb-0" type="password" id="CPassword" Name="CPassword" placeholder="Confirm Password">
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" id="btnLogin" class="register-button mt-0">Register</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                @*<div class="col-lg-2">
+                    </div>*@
+            </div>
+        </div>
+    </div>
+    <script src="~/Theme/assets/js/vendor/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="~/Theme/assets/js/popper.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="~/Theme/assets/js/bootstrap.min.js"></script>
+
+    <!-- Plugins JS -->
+    <script src="~/Theme/assets/js/plugins.js"></script>
+
+    <!-- Main JS -->
+    <script src="~/Theme/assets/js/main.js"></script>
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon">
+    <script src="~/assets/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script>
+        $(document).ready(() => {
+            $('#ImageView').hide();
+        });
+        function readURL(input) {
+           // validateFileType();
+            $('#ImageView').show();
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#ImageView').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+
+                if ($('#ProductImg').hasClass('error')) {
+                    $('#ProductImg').addClass('valid');
+                    $('#ProductImg').removeClass('error');
+                }
+                $('#ProductImg-error').attr("style", "display:none");
+            }
+        }
+        function validateFileType(img) {
+
+                var fileName = document.getElementById("ProductImg").value;
+
+            var idxDot = fileName.lastIndexOf(".") + 1;
+            var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+            if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+            }
+            else {
+                $('#ProductImg').val('');
+                alert("Only jpg/jpeg and png files are allowed!");
+            }
+        }
+        $(document).ready(() => {
+            $("#addUser").validate({
+                rules: {
+                    Password: {
+                        required: true,
+                    },
+                    CPassword: {
+                        required: true,
+                        equalTo: "#Password",
+                    },
+                    Email: {
+                        required: true,
+                    },
+                    ContactNo: {
+                        required: true,
+                        minlength: 10,
+                        maxlength: 10
+                    },
+                    BirthDate: {
+                        required: true,
+                    },
+                    LastName: {
+                        required: true,
+                    },
+                    FirstName: {
+                        required: true,
+                    },
+                    ProfileImg: {
+                        required: true,
+                    },
+                    Address1: {
+                        required: true,
+                    },
+                    Address2: {
+                        required: true,
+                    },
+                    PinCode: {
+                        required: true,
+                    },
+                    CityId: {
+                        required: true,
+                    },
+                    StateId: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    Email: {
+                        required: "Email is required",
+                    },
+                    Password: {
+                        required: "Password is required",
+                    },
+                    CPassword: {
+                        required: "Confirm password is required",
+                        equalTo: "Password and Confirm Password should be same",
+                    },
+                    ContactNo: {
+                        required: " Contact No is required",
+                    },
+                    BirthDate: {
+                        required: "Birth Date is required",
+                    },
+                    LastName: {
+                        required: "LastName is required",
+                    },
+                    FirstName: {
+                        required: "FirstName is required",
+                    },
+                    ProfileImg: {
+                        required: "Profile image is required",
+                    },
+                    Address1: {
+                        required: "Address is required",
+                    },
+                    Address2: {
+                        required: "Address is required",
+                    },
+                    PinCode: {
+                        required: "Pincode is required",
+                    },
+                    CityId: {
+                        required: "City is required",
+                    },
+                    StateId: {
+                        required: "State is required",
+                    },
+                },
+
+                errorPlacement: function (error, element) {
+                    if (element.is(":radio")) {
+                        error.appendTo(element.parents(".form-group"));
+                    } else {
+                        // This is the default behavior
+                        error.insertAfter(element);
+                    }
+                },
+                submitHandler: function (form) {
+                    AddUser();
+                }
+            });
+
+        });
+
+        function AddUser() {
+
+            var formData = new FormData();
+
+            var file = document.getElementById("ProfileImg").files[0];
+            formData.append("files", file);
+            formData.append("Users_Id", 0);
+            formData.append("LastName", $("#LastName").val());
+            formData.append("FirstName", $("#FirstName").val());
+            formData.append("BirthDate", $("#BirthDate").val());
+            formData.append("ContactNo", $("#ContactNo").val());
+            formData.append("Email", $("#Email").val());
+            formData.append("Address", $("#Address1").val());
+            formData.append("Addressline2", $("#Address2").val());
+            formData.append("Pincode", $("#PinCode").val());
+            formData.append("CityId", $("#CityId").val());
+            formData.append("StateId", $("#StateId").val());
+            formData.append("Password", $("#Password").val());
+            $.ajax({
+
+                type: "POST",
+                url: '@Url.Action(Actions.Users_Upsert, Controllers.Myaccount)',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.Code == 200) {
+                        swal({
+                            title: "",
+                            text: "You are now registered with Agric machinery and health!",
+                            icon: "success",
+                            timer: 2000
+                        });
+                        window.location.href = '@Url.Action(Actions.Login,Controllers.Myaccount)';
+                    }
+                    else {
+                        swal({
+                            title: "",
+                            text: response.Message,
+                            icon: "warning",
+                            timer: 2000
+                        });
+                        $("#btnLogin").show();
+                    }
+                },
+                error: function (error) {
+                    $("#btnLogin").show();
+                    swal("Error!", error.Message, "error");
+                }
+            });
+        }
+    </script>
+
+    <!--=====  End of Login register page content  ======-->
+    <!--=============================================
+    =            Footer         =
+    =============================================-->
+    <!--=====  End of Footer  ======-->
+    <!-- scroll to top  -->
+    <a href="#" class="scroll-top"></a>
+    <!-- end of scroll to top -->
+    <!-- JS
+    ============================================ -->
+    <!-- jQuery JS -->
+    <script src="~/assets/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="~/assets/js/jquery.validate.js"></script>
+    <script src="~/assets/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>

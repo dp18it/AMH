@@ -1,0 +1,511 @@
+﻿@using AMH.Common;
+@using AMH.Pages;
+@using AMH.Controllers;
+@{
+    ViewBag.Title = "SingleProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .slick-track {
+        transform: translate3d(0px, 0px, 0px) !important;
+
+    }
+</style>
+<body>
+    <div class="breadcrumb-area mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="breadcrumb-container">
+                        <ul>
+                            <li><a href="/Home/Index"><i class="fa fa-home"></i>Home</a></li>
+                            <li class="active"><a href="~/Views/Products/Index.cshtml">Product</a></li>
+                            @*<li><a href="#">Fast Foods</a></li>
+        <li class="active">Cillum dolore tortor nisl fermentum</li>*@
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="single-product-content" id="ProductItem">
+        <div class="container">
+
+        </div>
+    </div>
+
+    <div class="single-product-tab-section mb-35">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="tab-slider-wrapper">
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab"
+                                   aria-selected="false"><span id="reviewcount"></span></a>
+                            </div>
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade  show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+                                <div class="product-ratting-wrap" id="FEEDBACK">
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" class="scroll-top"></a>
+    <script src="~/Theme/assets/js/vendor/jquery.min.js"></script>
+    <!-- jQuery JS -->
+    <script src="~/Theme/assets/js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="~/Theme/assets/js/vendor/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="~/Theme/assets/js/popper.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="~/Theme/assets/js/bootstrap.min.js"></script>
+
+    <!-- Plugins JS -->
+    <script src="~/Theme/assets/js/plugins.js"></script>
+
+    <!-- Main JS -->
+    <script src="~/Theme/assets/js/main.js"></script>
+        
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script>
+            var isbought = false;
+            var userids =[];
+            var feeds =[];
+        $(document).ready(function ($) {
+            $('#menu2').addClass('active');
+            $('#menu1').removeClass('active');
+            $('#menu3').removeClass('active');
+        PId = '@ViewBag.Product_Id';
+            ViewProduct(PId);
+            ViewFeedback(PId);
+
+            $("#feedbackform").validate({
+                rules: {
+                    review: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    review: {
+                        required: "Feedback is required",
+                    }
+                },
+
+                errorPlacement: function (error, element) {
+                    if (element.is(":radio")) {
+                        error.appendTo(element.parents(".form-group"));
+                    } else {
+                        // This is the default behavior
+                        error.insertAfter(element);
+                    }
+                },
+                submitHandler: function (form) {
+                    addTofeedback();
+                }
+            });
+
+        });
+        function RemClass1() {
+            $('#single-slide1').show();
+            $('#single-slide2').hide();
+            $('#single-slide3').hide();
+            $('#single-slide4').hide();
+            $('#single-slide-tab-1').addClass('active');
+            $('#single-slide1').addClass('show active');
+            $('#single-slide2').removeClass('show active');
+            $('#single-slide3').removeClass('show active');
+            $('#single-slide4').removeClass('show active');
+            $('#single-slide-tab-2').removeClass('active');
+            $('#single-slide-tab-3').removeClass('active');
+            $('#single-slide-tab-4').removeClass('active');
+        }
+        function RemClass2() {
+            $('#single-slide1').hide();
+            $('#single-slide2').show();
+            $('#single-slide3').hide();
+            $('#single-slide4').hide();
+            $('#single-slide2').addClass('show active');
+            $('#single-slide1').removeClass('show active');
+            $('#single-slide3').removeClass('show active');
+            $('#single-slide4').removeClass('show active');
+            $('#single-slide-tab-2').addClass('active');
+            $('#single-slide-tab-1').removeClass('active');
+            $('#single-slide-tab-3').removeClass('active');
+            $('#single-slide-tab-4').removeClass('active');
+        }
+        function RemClass3() {
+            $('#single-slide1').hide();
+            $('#single-slide2').hide();
+            $('#single-slide3').show();
+            $('#single-slide4').hide();
+            $('#single-slide3').addClass('show active');
+            $('#single-slide1').removeClass('show active');
+            $('#single-slide2').removeClass('show active');
+            $('#single-slide4').removeClass('show active');
+            $('#single-slide-tab-3').addClass('active');
+            $('#single-slide-tab-1').removeClass('active');
+            $('#single-slide-tab-2').removeClass('active');
+            $('#single-slide-tab-4').removeClass('active');
+        }
+        function RemClass4() {
+            $('#single-slide1').hide();
+            $('#single-slide2').hide();
+            $('#single-slide3').hide();
+            $('#single-slide4').show();
+            $('#single-slide4').addClass('show active');
+            $('#single-slide1').removeClass('show active');
+            $('#single-slide3').removeClass('show active');
+            $('#single-slide2').removeClass('show active');
+            $('#single-slide-tab-4').addClass('active');
+            $('#single-slide-tab-1').removeClass('active');
+            $('#single-slide-tab-3').removeClass('active');
+            $('#single-slide-tab-2').removeClass('active');
+        }
+
+        function ViewProduct(Product_Id) {
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action(Actions.Product_ById, Controllers.Products)',
+                data: { Product_Id: Product_Id },
+                dataType: 'json',
+                success: function (response) {
+                    var htmlData = "";
+                    if (response.Code == 200) {
+                        isbought = response.Item.isbought;
+                        htmlData += `<div class="single-product-content ">`
+                        htmlData += `<div class="container">`
+                        htmlData += `<div class="single-product-content-container mb-35">`
+                        htmlData += `<div class="row">`
+                        htmlData += `<div class="col-lg-6 col-md-12 col-xs-12">`
+                            htmlData += `<div class="product-image-slider d-flex flex-custom-xs-wrap flex-sm-nowrap align-items-center mb-sm-35">`
+                                htmlData += `<div class="product-small-image-list"> `
+                                    htmlData += `<div class="nav small-image-slider-single-product slick-initialized slick-slider slick-vertical" role="tablist">`
+                        htmlData += `<div class="slick-list draggable" style="height: 306px;">`
+                        htmlData += `<div class="slick-track" style="opacity: 1; height: 1122px; transform: translate3d(0px, -306px, 0px);">`
+                        htmlData += `<div class="single-small-image img-full slick-slide slick-cloned" data-slick-index="1" aria-hidden="true" tabindex="0" style="width: 122px;">`
+                        htmlData += `<a data-toggle="tab" id="single-slide-tab-1" onclick="RemClass1();" tabindex="0">`
+                                            htmlData += `<img src="${response.Item.ImageUrlStr}" class="img-fluid" alt="">`
+                                            htmlData += `</a>`
+                                        htmlData += `</div>`
+                        htmlData += `<div class="single-small-image img-full slick-slide slick-cloned" data-slick-index="2" aria-hidden="true" tabindex="0" style="width: 122px;">`
+                        htmlData += `<a data-toggle="tab" id="single-slide-tab-2" onclick="RemClass2();" tabindex="0">`
+                                            htmlData += `<img src="${response.Item.ExtraImage1UrlStr}" class="img-fluid" alt="">`
+                                            htmlData += `</a>`
+                                        htmlData += `</div>`
+                        htmlData += `<div class="single-small-image img-full slick-slide slick-cloned" data-slick-index="3" aria-hidden="true" tabindex="0" style="width: 122px;">`
+                        htmlData += `<a data-toggle="tab" id="single-slide-tab-3" onclick="RemClass3();" tabindex="0">`
+                                            htmlData += `<img src="${response.Item.ExtraImage2UrlStr}" class="img-fluid" alt="">`
+                                            htmlData += `</a>`
+                                        htmlData += `</div>`
+                        htmlData += `<div class="single-small-image img-full slick-slide slick-cloned" data-slick-index="4" aria-hidden="true" tabindex="0" style="width: 122px;">`
+                        htmlData += `<a data-toggle="tab" id="single-slide-tab-4" onclick="RemClass4();" tabindex="0">`
+                                            htmlData += `<img src="${response.Item.ExtraImage3UrlStr}" class="img-fluid" alt="">`
+                                            htmlData += `</a>`
+                                        htmlData += `</div>`
+                         htmlData += `</div>`
+                         htmlData += `</div>`
+                                htmlData += `</div>`
+                                htmlData += `</div>`
+
+                                htmlData += `<div class="tab-content product-large-image-list">`
+                                    htmlData += `<div class="tab-pane fade show active" id="single-slide1" role="tabpanel" aria-labelledby="single-slide-tab-1">`
+                                        htmlData += `<div class="single-product-img easyzoom img-full is-ready">`
+                        htmlData += '<img src="' + response.Item.ImageUrlStr +'" class="img-fluid" style="margin-top: -75px;" alt="">'
+                                            htmlData += '<a href="'+response.Item.ImageUrlStr+'" class="big-image-popup"><i class="fa fa-search-plus"></i></a>'
+                                        htmlData += `</div>`
+                                    htmlData += `</div>`
+                                    htmlData += `<div class="tab-pane fade" id="single-slide2" role="tabpanel" aria-labelledby="single-slide-tab-2">`
+                                        htmlData += `<div class="single-product-img easyzoom img-full is-ready">`
+                        htmlData += '<img src="' + response.Item.ExtraImage1UrlStr +'" class="img-fluid" style="margin-top: -75px;" alt="">'
+                                            htmlData += `<a href="`+response.Item.ExtraImage1UrlStr+`" class="big-image-popup"><i class="fa fa-search-plus"></i></a>`
+                                        htmlData += `</div>`
+                                    htmlData += `</div>`
+                                    htmlData += `<div class="tab-pane fade" id="single-slide3" role="tabpanel" aria-labelledby="single-slide-tab-3">`
+                                        htmlData += `<div class="single-product-img easyzoom img-full is-ready">`
+                        htmlData += '<img src="' + response.Item.ExtraImage2UrlStr +'" class="img-fluid" style="margin-top: -75px;" alt="">'
+                                            htmlData += `<a href="`+response.Item.ExtraImage2UrlStr+`" class="big-image-popup"><i class="fa fa-search-plus"></i></a>`
+                                        htmlData += `</div>`
+                                    htmlData += `</div>`
+                                    htmlData += `<div class="tab-pane fade" id="single-slide4" role="tabpanel" aria-labelledby="single-slide-tab-4">`
+                                        htmlData += `<div class="single-product-img easyzoom img-full is-ready">`
+                        htmlData += `<img src="` + response.Item.ExtraImage3UrlStr +`" class="img-fluid" style="margin-top: -75px;" alt="">`
+                                            htmlData += `<a href="`+response.Item.ExtraImage3UrlStr+`" class="big-image-popup"><i class="fa fa-search-plus"></i></a>`
+                                        htmlData += `</div>`
+                                    htmlData += `</div>`
+                                htmlData += `</div>`
+                            htmlData += `</div>`
+                        htmlData += `</div>`
+
+                        htmlData += `<div class="col-lg-6 col-md-12 col-xs-12">`
+                        htmlData += `<div class="product-feature-details">`
+                        htmlData += `<h2 class="product-title mb-15">${response.Item.Name}</h2>`
+                        htmlData += `<h2 class="product-price mb-15">`
+                        htmlData += `<span class="discounted-price">&#8377; ${response.Item.Price}</span>`
+                        htmlData += `</h2>`
+                        htmlData += `<p class="product-description mb-20">${response.Item.Description}</p>`
+                        htmlData += `<div class="cart-buttons mb-20">`
+                        htmlData += `<div class="pro-qty mr-20 mb-xs-20">`
+                        htmlData += `<input type="number" id="qunt" value="1">`
+                        htmlData += `</div>`
+                        htmlData += `</div>`
+                        htmlData += `<div class="cart-buttons mb-20">`
+                        htmlData += `<div class="add-to-cart-btn" id="cart${response.Item.Product_Id}">`
+                        if (response.Item.IsInCart == false) {
+                            htmlData += `<a  onclick="addToCart('${response.Item.Product_Id}');"><i class="fa fa-shopping-cart"></i> Add to Cart</a> &nbsp; `
+                        }
+                        else {
+                            htmlData += `<a  onclick="removefromCart('${response.Item.Product_Id}');"><i class="fa fa-shopping-cart"style="color:red"></i> Remove from Cart</a> &nbsp; `
+                        }
+                        htmlData += `</div>`
+                        htmlData += `<div class="add-to-cart-btn" id="wish${response.Item.Product_Id}">`
+                        if (response.Item.IsInWishlist == false) {
+                            htmlData += `<a  onclick="addToWishList('${response.Item.Product_Id}');"><i class="fa fa-heart"></i> Add to wishlist</a>`
+                        }
+                        else {
+                            htmlData += `<a onclick="removefromWishList('${response.Item.Product_Id}');"><i class="fa fa-heart"style="color:red"></i> Remove from wishlist</a>`
+                        }
+                        htmlData += `</div>`
+                        htmlData += `</div>`
+                        htmlData += `</div>`
+                        htmlData += `</div>`
+
+                        htmlData += `</div>`
+                        htmlData += `</div>`
+                        htmlData += `</div>`
+                        htmlData += `</div>`
+                    }
+                    else {
+
+                        htmlData += '<h5 class="text-center">No Record Found</h5>';
+                    }
+
+                    $("#ProductItem").html(htmlData);
+                },
+
+                error: function (error) {
+                    swal("Error !", "Something Went Wrong", "error");
+                }
+            });
+        }
+
+        function ViewFeedback(Product_Id) {
+
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action(Actions.Feedback_All, Controllers.Feedback)',
+                data: { Product_Id: Product_Id },
+                dataType: 'json',
+                success: function (response) {
+                    var htmlData = "";
+                        $('#reviewcount').html(`Reviews (${response.Values.length})`);
+                    if (response.Values.length > 0) {
+                        htmlData += '<div class="pro-avg-ratting"><h4>' + response.Values.length +' Review</h4></div>'
+                        for (var i = 0; i < response.Values.length; i++) {
+                            userids.push(response.Values[i].User_Id);
+                            feeds.push(response.Values[i].FeedBack);
+                            htmlData += `  <div class="rattings-wrapper">
+                                        <div class="sin-rattings">
+                                            <div class="ratting-author">
+                                                <h3>${response.Values[i].UserName}</h3>( ${response.Values[i].F_DateStr} )
+                                            </div>
+                                            <p>
+                                                ${response.Values[i].FeedBack}
+                                            </p>
+                                        </div>
+                                    </div>`;
+                        }
+                        if (isbought == true) {
+                            htmlData += `        <div class="ratting-form-wrapper fix">
+                                        <h3>Add your Feedback</h3>
+                                        <form id="feedbackform">
+                                            <div class="ratting-form row">
+                                                <div class="col-12 mb-15">
+                                                    <label for="your-review">Your Review:</label>
+                                                    <textarea name="review" id="your-review"
+                                                              placeholder="Write a review"></textarea>
+                                                </div>
+                                                <div class="col-12">
+                                                    <button type="submit" onclick="addTofeedback();" id="btnLogin">Add feedback</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>`
+                        }
+                    }
+
+                    else {
+                        htmlData += '<h5 class="text-center">No feedback found</h5>';
+                        if (isbought == true) {
+                            htmlData += `<div class="ratting-form-wrapper fix">
+                                        <h3>Add your Feedback</h3>
+                                        <form id="feedbackform" method="POST">
+                                            <div class="ratting-form row">
+                                                <div class="col-12 mb-15">
+                                                    <label for="your-review">Your Review:</label>
+                                                    <textarea name="review" id="your-review"
+                                                              placeholder="Write a review"></textarea>
+                                                </div>
+                                                <div class="col-12">
+                                                    <button type="submit" onclick="addTofeedback();" id="btnLogin">Add feedback</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>`
+                        }
+
+                    }
+                    for (i = 0; i < userids.length; i++) {
+                        if (userids[i] ==@ProjectSession.Users_Id) {
+                            $("#your-review").val(feeds[i]);
+                        }
+                    }
+                    $("#FEEDBACK").html(htmlData);
+                },
+
+                error: function (error) {
+                    swal("Error !", "Something Went Wrong", "error");
+                }
+            });
+        }
+
+        function removefromCart(Product_Id) {
+            if (@ProjectSession.Users_Id == 0 || @ProjectSession.Users_Id == null) {
+                window.location.href = '@Url.Action(Actions.Login, Controllers.Myaccount)';
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action(Actions.Cart_Delete, Controllers.Cart)',
+                    data: { Product_Id: Product_Id },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.Code == 200) {
+                            $("#" + "cart" + Product_Id + "").html(`<a  onclick="addToCart('${response.Item.Product_Id}');"><i class="fa fa-shopping-cart"></i> Add to Cart</a> &nbsp;`);
+                        }
+                        else {
+                            swal("Error !", response.Message, "error");
+                        }
+                    },
+                    error: function (error) {
+                        swal("Error !", "Something Went Wrong", "error");
+                    }
+                });
+            }
+        }
+
+
+        function addToCart(Product_Id) {
+            if (@ProjectSession.Users_Id == 0 || @ProjectSession.Users_Id == null) {
+                window.location.href = '@Url.Action(Actions.Login, Controllers.Myaccount)';
+            }
+            else {
+                var q = $('#qunt').val();
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action(Actions.Cart_Upsert, Controllers.Cart)',
+                    data: { Product_Id: Product_Id, qunt: q},
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.Code == 200) {
+                            $("#" + "cart" + Product_Id + "").html(`<a  onclick="removefromCart('${response.Item.Product_Id}');"><i class="fa fa-shopping-cart"style="color:red"></i> Remove from Cart</a> &nbsp;`);
+                        }
+                        else {
+                            swal("Error !", response.Message, "error");
+                        }
+                    },
+                    error: function (error) {
+                        swal("Error !", "Something Went Wrong", "error");
+                    }
+                });
+            }
+        }
+
+        function addToWishList(Product_Id) {
+            if (@ProjectSession.Users_Id == 0 || @ProjectSession.Users_Id == null) {
+                window.location.href = '@Url.Action(Actions.Login, Controllers.Myaccount)';
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action(Actions.Wishlist_Upsert, Controllers.Wishlist)',
+                    data: { Product_Id: Product_Id },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.Code == 200) {
+                            $("#" + "wish" + Product_Id + "").html(`<a onclick="removefromWishList('${response.Item.Product_Id}');"><i class="fa fa-heart"style="color:red"></i> Remove from wishlist</a>`);
+                        }
+                        else {
+                            swal("Error !", response.Message, "error");
+                        }
+                    },
+                    error: function (error) {
+                        swal("Error !", "Something Went Wrong", "error");
+                    }
+                });
+            }
+        }
+
+        function removefromWishList(Product_Id) {
+            if (@ProjectSession.Users_Id == 0 || @ProjectSession.Users_Id == null) {
+                window.location.href = '@Url.Action(Actions.Login, Controllers.Myaccount)';
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action(Actions.Wishlist_Delete, Controllers.Wishlist)',
+                    data: { Product_Id: Product_Id },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.Code == 200) {
+                            $("#" + "wish" + Product_Id + "").html(`<a onclick="addToWishList('${response.Item.Product_Id}');" > <i class="fa fa-heart"></i> Add to wishlist</a >`);
+                        }
+                        else {
+                            swal("Error !", response.Message, "error");
+                        }
+                    },
+                    error: function (error) {
+                        swal("Error !", "Something Went Wrong", "error");
+                    }
+                });
+            }
+        }
+
+
+        function addTofeedback() {
+            var FBack = $('#your-review').val();
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action(Actions.Feedback_Upsert, Controllers.Feedback)',
+                    data: { I:0,F: FBack, P: PId},
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.Code == 200) {
+                            window.location.href = '@Url.Action(Actions.SingleProduct, Controllers.Products)?Product_Id=' + PId + '';
+                        }
+                        else {
+                            swal("Error !", response.Message, "error");
+                        }
+                    },
+                    error: function (error) {
+                        swal("Error !", "Something Went Wrong", "error");
+                    }
+                });
+
+        }
+
+
+    </script>
+</body>

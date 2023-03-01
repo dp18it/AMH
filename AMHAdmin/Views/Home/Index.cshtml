@@ -1,0 +1,343 @@
+﻿@using AMH.Common;
+@using AMHAdmin.Pages;
+@using System.Web.Optimization;
+@using AMHAdmin.Infrastructure;
+
+@Html.AntiForgeryToken()
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h5>Dashboard</h5>
+            <br />
+            <h5 id="p1" style="float: left; padding-right: 40px;"></h5>
+
+            <h4 id="timec"></h4>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    #map {
+        height: 400px;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    #ProvidersLocationsMap {
+        height: 400px;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    #CompletedRequestmap {
+        height: 400px;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    span {
+        color: #0596F8 !important;
+    }
+
+    .checkbox2 {
+        width: 25px;
+        height: 25px;
+    }
+
+    thead {
+        background: #0069D9;
+        color: white;
+    }
+
+    .row {
+        margin: 0 !important;
+    }
+
+    .activ {
+        background: linear-gradient(to right, #0069D9, #0069D9);
+        color: white;
+    }
+
+    .has-error .checkbox, .has-error .checkbox-inline, .has-error .control-label, .has-error .form-control-feedback, .has-error .help-block, .has-error .radio, .has-error .radio-inline, .has-error.checkbox label, .has-error.checkbox-inline label, .has-error.radio label, .has-error.radio-inline label {
+        color: #e73d4a
+    }
+
+    .has-error .form-control {
+        border-color: #e73d4a;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075)
+    }
+
+        .has-error .form-control:focus {
+            border-color: #d71b29;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #f2989f;
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #f2989f
+        }
+
+    .has-error .input-group-addon {
+        color: #e73d4a;
+        border-color: #e73d4a;
+        background-color: #fbe1e3
+    }
+
+    .autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-bottom: none;
+        z-index: 99;
+        top: 40px;
+        left: 0;
+        right: 0;
+        box-shadow: 0 39px 70px 0 rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+    }
+
+        .autocomplete-items > div {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #ccc;
+        }
+
+            .autocomplete-items > div:hover {
+                background: #fbfbfb;
+            }
+
+    .addDelete {
+        color: black !important;
+        background: #e9e9e9 !important;
+    }
+
+    .hideDelete {
+        display: none !important;
+    }
+
+    .text-c-dark {
+        color: #000;
+    }
+
+    .device-active .active .card {
+        background: #157aec;
+        cursor: pointer;
+    }
+
+    .device-active .active .text-c-dark {
+        color: #fff !important;
+    }
+
+        .device-active .active .text-c-dark .icon {
+            background-color: #0069D9;
+            border: none;
+        }
+
+    .icon-box {
+        background: #eff1f4;
+    }
+
+        .icon-box:hover {
+            background: #0e67cc !important;
+        }
+
+    .min-height-count {
+        min-height: 96px;
+    }
+</style>
+
+
+
+@*<div class="row" id="dashboardDetails">
+    </div>*@
+<div class="container-fluid mt-4">
+    <div class="row mt-4">
+
+        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-12 pb-4">
+            <div class="card h-100">
+
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                        <span class="text-secondary text-muted fw-medium fs-16 fw-bold"> Total Users</span>
+                        <img src="https://img.icons8.com/color/48/000000/waypoint-map.png" />
+                    </div>
+                    <h2 class="fw-bold mb-0" id="TotalUsers" value="TotalUsers"></h2>
+                </div>
+                @*<a href="#!" class="stretched-link"></a>*@
+            </div>
+
+        </div>
+        <!--<div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-12 pb-4">
+            <div class="card h-100">
+
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                        <span class="text-secondary text-muted fw-medium fs-16 fw-bold">Active Users </span>
+                        <img src="https://img.icons8.com/color/48/000000/doctor-male-skin-type-3.png" />
+                    </div>
+                    <h2 class="fw-bold mb-0" id="ActiveUsers" value="ActiveUsers"></h2>
+                </div>-->
+                @*<a href="#!" class="stretched-link"></a>*@
+            <!--</div>
+
+        </div>-->
+        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-12 pb-4">
+            <div class="card h-100">
+
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                        <span class="text-secondary text-muted fw-medium fs-16 fw-bold">New Users of this month</span>
+                        <img src="https://img.icons8.com/color/48/000000/tiktok-verified-account.png" />
+                    </div>
+                    <h2 class="fw-bold mb-0" id="NewUsers" value="NewUsers"></h2>
+                </div>
+                @*<a href="#!" class="stretched-link"></a>*@
+            </div>
+
+        </div>
+        <!--<div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-12 pb-4">
+            <div class="card h-100">
+
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                        <span class="text-secondary text-muted fw-medium fs-16 fw-bold">New Product of this month</span>
+                        <img src="https://img.icons8.com/color/48/000000/average.png" />
+                    </div>
+                    <h2 class="fw-bold mb-0" id="Amount" value="Amount"></h2>
+                </div>-->
+                @*<a href="#!" class="stretched-link"></a>*@
+            <!--</div>
+
+        </div>-->
+        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-12 pb-4">
+            <div class="card h-100">
+
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                        <span class="text-secondary text-muted fw-medium fs-16 fw-bold">Active Order</span>
+                        <img src="https://img.icons8.com/color/48/000000/average.png" />
+                    </div>
+                    <h2 class="fw-bold mb-0" id="ActiveOrder" value="ActiveOrder"></h2>
+                </div>
+                <a href="#!" class="stretched-link"></a>
+            </div>
+
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-12 pb-4">
+            <div class="card h-100">
+
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                        <span class="text-secondary text-muted fw-medium fs-16 fw-bold">Order Placed</span>
+                        <img src="https://img.icons8.com/color/48/000000/average.png" />
+                    </div>
+                    <h2 class="fw-bold mb-0" id="PlasedOrder" value="PlasedOrder"></h2>
+                </div>
+                <a href="#!" class="stretched-link"></a>
+            </div>
+
+        </div>
+        <!--<div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-12 pb-4">
+            <div class="card h-100">
+
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                        <span class="text-secondary text-muted fw-medium fs-16 fw-bold">Count of received Payment</span>
+                        <img src="https://img.icons8.com/color/48/000000/average.png" />
+                    </div>
+                    <h2 class="fw-bold mb-0" id="ReceivedPayment" value="ReceivedPayment"></h2>
+                </div>-->
+                @*<a href="#!" class="stretched-link"></a>*@
+            <!--</div>
+
+        </div>-->
+        <!--<div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-12 pb-4">
+            <div class="card h-100">
+
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                        <span class="text-secondary text-muted fw-medium fs-16 fw-bold">Count of pending Payment</span>
+                        <img src="https://img.icons8.com/color/48/000000/average.png" />
+                    </div>
+                    <h2 class="fw-bold mb-0" id="PendingPayment" value="PendingPayment"></h2>
+                </div>-->
+                @*<a href="#!" class="stretched-link"></a>*@
+            <!--</div>
+
+        </div>-->
+        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-12 pb-4">
+            <div class="card h-100">
+
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                        <span class="text-secondary text-muted fw-medium fs-16 fw-bold">Feedback</span>
+                        <img src="https://img.icons8.com/color/48/000000/average.png" />
+                    </div>
+                    <h2 class="fw-bold mb-0" id="Feedback" value="Feedback"></h2>
+                </div>
+                @*<a href="#!" class="stretched-link"></a>*@
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(() => {
+            //DashboardDetails();
+            BindData();
+        });
+       
+         function BindData()
+        {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action(Actions.Home_All, Controllers.Home)',
+                data: {},
+                dataType: 'json',
+                async: true,
+                success: function (response) {
+                    if (response.Code == 200) {
+                        //$('#DoctorId').text(response.Item.DoctorId)
+                        $('#TotalUsers').text(response.Item.TotalUsers)
+                        $('#ActiveUsers').text(response.Item.ActiveUsers)
+                        $('#NewUsers').text(response.Item.NewUsers)
+                        $('#NewProduct').text(response.Item.NewProduct)
+                        $('#ActiveOrder').text(response.Item.ActiveOrder)
+                        $('#PlasedOrder').text(response.Item.PlasedOrder)
+                        $('#ReceivedPayment').text(response.Item.ReceivedPayment)
+                        $('#PendingPayment').text(response.Item.PendingPayment)
+                        $('#Feedback').text(response.Item.Feedback)
+
+                    }
+                    else {
+                        swal({
+                            title: "Warning",
+                            text: response.Message,
+                            icon: "warning"
+                        })
+                    }
+                },
+                error: function (error) {
+                    swal({
+                        title: "Warning",
+                        text: "Something Went Wrong!",
+                        icon: "warning"
+                    })
+                }
+            });
+        }
+
+        
+    </script>
+}

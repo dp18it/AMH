@@ -1,0 +1,300 @@
+﻿@using AMH.Common;
+@using AMH.Pages;
+@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<body>
+
+    <div class="breadcrumb-area mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="breadcrumb-container">
+                        <ul>
+                            <li>@*<a href="index.html"><i class="fa fa-home"></i> Home</a>*@</li>
+                            <li class="active">Checkout</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-section section mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+
+                    <!-- Checkout Form s-->
+                    <form action="#" class="checkout-form">
+                        <div class="row row-40">
+
+                            <div class="col-lg-5 mb-20">
+
+                                <!-- Billing Address -->
+                                <div id="billing-form" class="mb-40">
+                                    <h4 class="checkout-title">Billing Address</h4>
+                                    <div class="myaccount-content" id="addDetails">
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="row row-40">
+                            <div class="col-lg-8">
+                                <!-- Cart Total -->
+                                <div class="col-12 mb-60">
+
+                                    <h4 class="checkout-title">Cart Total</h4>
+                                        <div class="checkout-cart-total" id="carttotal">
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+
+                                <h4 class="checkout-title">Payment Method</h4>
+
+                                <div class="checkout-payment-method">
+
+                                    <div class="single-method">
+                                        <input type="radio" id="payment_check" name="payment-method" value="check">
+                                        <label for="payment_check">Check Payment</label>
+                                        <p data-method="check">Please send a Check to A-502 Abhilasha Sky, oppo. Suncity bunglows, Near Gopal Chawk,Ahmedabad- 382350 by speed post.</p>
+                                    </div>
+
+                                    
+                                    <div class="single-method">
+                                        <input type="radio" id="payment_cash" name="payment-method" value="cash">
+                                        <label for="payment_cash">Cash on Delivery</label>
+                                    </div>
+
+                                    <div class="single-method">
+                                        <input type="radio" id="payment_paypal" name="payment-method" value="paypal">
+                                        <label for="payment_paypal">Paypal</label>
+                                    </div>
+
+                                    <div class="single-method">
+                                        <input type="checkbox" id="accept_terms">
+                                        <label for="accept_terms"><a href="/TermsandCondition/Index">I’ve read and accept the terms & conditions</a></label>
+                                    </div>
+
+                                </div>
+
+                                <button class="place-order" onclick="addtoorder()">Place order</button>
+
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" class="scroll-top"></a>
+    <!-- end of scroll to top -->
+    <script src="~/Theme/assets/js/vendor/jquery.min.js"></script>
+    <script src="~/Theme/assets/js/popper.min.js"></script>
+    <script src="~/Theme/assets/js/bootstrap.min.js"></script>
+    <script src="~/Theme/assets/js/plugins.js"></script>
+    <script src="~/Theme/assets/css/font-awesome.min.css"></script>
+    <script src="~/Theme/assets/js/main.js"></script>
+
+
+</body>
+<script>
+    var ProIds = [];
+    var Quantities = [];
+    var Prices = [];
+    var TotalAmout;
+      $(document).ready(function ($) {
+        productadd('',0);
+        Adddetails();
+    });
+    function productadd(search, lm) {
+        $.ajax({
+            type: "get",
+            url: '@Url.Action(Actions.Cart_All, Controllers.Cart)',
+            data: ({ limit: lm, Search: search }),
+            dataType: 'json',
+            success: function (response) {
+                var htmlData = "";
+                var subtotal = 0;
+                if (response.Values.length > 0) {
+                    htmlData += `<h4> Product <span> Total</span></h4>`
+                    htmlData += `<ul>`
+                    for (var i = 0; i < response.Values.length; i++) {
+                        htmlData += `    <li>${response.Values[i].Name} &nbsp; &nbsp;   X  &nbsp; &nbsp;  ${response.Values[i].Quantity} <span>${response.Values[i].Total}</span></li>`
+                        subtotal += response.Values[i].Total;
+
+                        ProIds.push(response.Values[i].Product_Id);
+                        Quantities.push(response.Values[i].Quantity);
+                        Prices.push(response.Values[i].Price);
+                        TotalAmout = subtotal + 100;
+                    }
+                    htmlData += `  </ul>`
+                    htmlData += `<p>Sub Total <span>&#8377; ${subtotal}</span></p>`
+                    htmlData += `<p>Shipping Fee <span>&#8377; 100</span></p>`
+                    htmlData += `<h4>Grand Total <span>&#8377; ${subtotal + 100}</span></h4>`
+
+                }
+                else {
+
+                    htmlData += '<h5 class="text-center">No Record Found</h5>';
+                }
+
+                $("#carttotal").html(htmlData);
+            },
+            error: function (error) {
+                console.log('error', error);
+            }
+        })
+    }
+
+    function addtoorder() {
+        {
+            var proids = ProIds.toString();
+            var quantities = Quantities.toString();
+            var prices = Prices.toString();
+            var totalamout = TotalAmout;
+
+
+            if (document.getElementById('accept_terms').checked)
+            {
+                if (document.getElementById('payment_cash').checked || document.getElementById('payment_check').checked || document.getElementById('payment_paypal').checked)
+                {
+                    if (document.getElementById('payment_paypal').checked) {
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action(Actions.Checkoutpayment, Controllers.Cart)',
+                          //  data: { ProIds: proids, Quantities: quantities, Prices: prices, TotalAmout: totalamout, PaymentStatus: false },
+                            dataType: 'json',
+                            success: function (response) {
+                                if (response.Code == 200) {
+                                    swal({
+                                        title: "Success !",
+                                        text: response.Message,
+                                        icon: "success",
+                                        timer: 3000
+                                    })
+                                    viewOrder();
+                                }
+                                else {
+                                    swal({
+                                        title: "Error !",
+                                        text: response.Message,
+                                        icon: "error",
+                                        timer: 3000
+                                    })
+                                }
+                            },
+                            error: function (error) {
+                                swal({
+                                    title: "Error !",
+                                    text: "Something Went Wrong",
+                                    icon: "error",
+                                    timer: 3000
+                                })
+                            }
+                        });
+                    }
+                    else {
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action(Actions.OrderAMH_Upsert, Controllers.Order)',
+                            data: { ProIds: proids, Quantities: quantities, Prices: prices, TotalAmout: totalamout, PaymentStatus: false },
+                            dataType: 'json',
+                            success: function (response) {
+                                if (response.Code == 200) {
+                                    swal({
+                                        title: "Success !",
+                                        text: response.Message,
+                                        icon: "success",
+                                        timer: 3000
+                                    })
+                                    viewOrder();
+                                }
+                                else {
+                                    swal({
+                                        title: "Error !",
+                                        text: response.Message,
+                                        icon: "error",
+                                        timer: 3000
+                                    })
+                                }
+                            },
+                            error: function (error) {
+                                swal({
+                                    title: "Error !",
+                                    text: "Something Went Wrong",
+                                    icon: "error",
+                                    timer: 3000
+                                })
+                            }
+                        });
+                    }
+                }
+                else {
+                    swal({
+                        title: "Error !",
+                        text: "Please check any payment method",
+                        icon: "error",
+                        timer: 3000
+                    })
+                }
+            }
+            else {
+              //  swal("Error !", "Pleace accept terms and conditions!");
+                swal({
+                    title: "Error !",
+                    text: "Pleace accept terms and conditions!",
+                    icon: "error",
+                    timer: 3000
+                })
+            }
+        }
+    }
+
+    function viewOrder(){
+        window.location.href = '@Url.Action(Actions.Index, Controllers.Myaccount)'
+    };
+
+    function Adddetails() {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action(Actions.Users_ById, Controllers.Myaccount)',
+            data: { Users_Id: @ProjectSession.Users_Id },
+            dataType: 'json',
+            success: function (response) {
+                var htmlData = "";
+                if (response.Code == 200) {
+                    htmlData += `<address>
+                        <p><strong>${response.Item.FirstName}&nbsp;  ${response.Item.LastName}</strong></p>
+                        <p>
+                            ${response.Item.Address} <br>
+                            ${response.Item.Addressline2},&nbsp;  ${response.Item.Pincode}<br>
+                            ${response.Item.CityName}, ${response.Item.StateName}.
+                                            </p>
+                            <p>Mobile: ${response.Item.ContactNo}</p>
+                                        </address></br>
+
+                                        <a href="@Url.Action(Actions.Index, Controllers.Myaccount)?add=1" class="btn d-inline-block edit-address-btn"><i class="fa fa-edit"></i>Edit Details</a>`
+                }
+                else {
+
+                    htmlData += '<h5 class="text-center">No Record Found</h5>';
+                }
+
+                $("#addDetails").html(htmlData);
+            },
+            error: function (error) {
+                console.log('error', error);
+            }
+        })
+    }
+</script>

@@ -1,0 +1,30 @@
+﻿@using AMH.Common;
+@using AMHAdmin.Pages;
+@using System.Web.Optimization;
+<style>
+    .sidebar-nav .metismenu ul a::before {
+        content: '';
+        position: absolute;
+        left: 19px
+    }
+</style>
+<ul class="main-menu metismenu">
+    <li class="custom"><a href="@Url.Action(Actions.Index, Controllers.Customer, new { Area = "" })" id="Dashboard"><i class="icon-speedometer"></i><span>Customer</span></a></li>
+    @*<li class="custom"><a href="@Url.Action(Actions.Index, Controllers.ServiceMaster, new { Area = "" })" id="serviceMaster"><i class="icon-speedometer"></i><span>Service Master</span></a></li>*@
+    @*<li class="custom"><a href="@Url.Action(Actions.Index, Controllers.SalonOwner, new { Area = "" })" id="SalonOwner"><i class="icon-users"></i><span>Manage Salon Owners</span></a></li>
+    <li class="custom"">
+        <a href="javascript:void(0)" id="MasterData" class="has-arrow" aria-expanded="false"><i class="icon-globe"></i> <span>Master Data</span></a>
+        <ul aria-expanded="false" class="collapse" style="height: 0px;">
+            <li><a id="ProductBrand" href="@Url.Action(Actions.MasterProductBrand, Controllers.MasterData, new { Area = "" })">Product Brand</a></li>
+            <li><a id="ProductType" href="@Url.Action(Actions.MasterProductType, Controllers.MasterData, new { Area = "" })">Product Type</a></li>
+            <li><a id="ProductWeight" href="@Url.Action(Actions.MasterProductWeight, Controllers.MasterData, new { Area = "" })">Product Weight</a></li>
+            <li><a id="OrderStatus" href="@Url.Action(Actions.MasterOrderStatus, Controllers.MasterData, new { Area = "" })">Order Status</a></li>
+            <li><a id="ProductCategory" href="@Url.Action(Actions.MasterProductCategory, Controllers.MasterData, new { Area = "" })">Product Category</a></li>
+        </ul>
+    </li>*@
+    <li class="custom"><a href="@Url.Action(Actions.ChangePassword, Controllers.ChangePassword, new { Area = "" })" id="ChangePassword"><i class="fa fa-key" aria-hidden="true"></i><span>Change Password</span></a></li>
+    <li class="custom"><a href="@Url.Action(Actions.Signout,Controllers.Authentication)" id="logout"><i class="fa fa-power-off"></i>Logout</a></li>
+
+</ul>
+
+

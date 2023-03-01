@@ -1,0 +1,251 @@
+﻿@using AMH.Common;
+@using AMH.Pages;
+@{
+    ViewBag.Title = "Wishlist";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<body>
+
+    <div class="breadcrumb-area mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="breadcrumb-container">
+                        <ul>
+                            <li><a href="/Home/Index"><i class="fa fa-home"></i>Home</a></li>
+                            <li class="active">Wishlist</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="shop-page-container mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 mb-sm-35 mb-xs-35">
+                    <div class="shop-product-wrap grid row no-gutters mb-35" id="ProductItem">
+
+                    </div>
+                </div>
+
+                <div class="col-lg-12 mb-sm-35 mb-xs-35">
+                    <label></label>
+                    <label></label>
+                </div>
+
+                <div class="container" id="showmore" style="background-color:white;">
+                </div>
+
+
+                <!--=======  End of Pagination container  =======-->
+
+            </div>
+        </div>
+    </div>
+
+    <a href="#" class="scroll-top"></a>
+    <!-- end of scroll to top -->
+    <!-- JS
+    ============================================ -->
+    <!--jQuery JS -->
+    <script src="~/Theme/assets/js/vendor/jquery.min.js"></script>
+    <!--Popper JS-->
+    <script src="~/Theme/assets/js/popper.min.js"></script>
+    <!--Bootstrap JS-->
+    <script src="~/Theme/assets/js/bootstrap.min.js"></script>
+    <!--Plugins JS-->
+    <script src="~/Theme/assets/js/plugins.js"></script>
+    <script src="~/Theme/assets/css/font-awesome.min.css"></script>
+    <script src="~/Theme/assets/js/main.js"></script>
+
+</body>
+<script>
+    var limit = 0;
+    $(document).ready(function ($) {
+        PId = '@ViewBag.Cat_Id';
+
+        productadd('',12);
+    });
+
+    function productadd(search,lm) {
+        $.ajax({
+            type: "get",
+            url: '@Url.Action(Actions.Wishlist_All, Controllers.Wishlist)',
+            data: ({ limit: lm, Search: search }),
+            dataType: 'json',
+            success: function (response) {
+                limit = lm;
+                var htmlData = "";
+                if (response.Values.length > 0) {
+                    //htmlData += `<div class="shop-page-container mb-50">`
+                    htmlData += `<div class="container">`
+                    htmlData += `<div class="row">`
+                    htmlData += `<div class="col-lg-12 mb-sm-35 mb-xs-40">`
+                    htmlData += `<div class="shop-product-wrap grid row no-gutters mb-20">`
+                    htmlData += `</div>`
+                    htmlData += `</div>`
+                    htmlData += `</div>`
+                    htmlData += `</div>`
+                    //htmlData += `</div>`
+                    for (var i = 0; i < response.Values.length; i++) {
+
+                        htmlData += `<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">`
+                        htmlData += `<div class="gf-product shop-grid-view-product">`
+                        htmlData += `<div class="image">`
+                        htmlData += ` <a href="single-product.html"> <img src="${response.Values[i].ImageUrlStr}" class="img-fluid"style=" height: 150px; width: 275px;" alt=""></a>`
+                        htmlData += ` <div id="cart${response.Values[i].Product_Id}" class="product-hover-icons" style="margin-right:60px ; margin-left:-30px">`
+                        if (response.Values[i].IsInCart == false) {
+                            htmlData += ` <a  data-tooltip="Add to cart" onclick="addToCart('${response.Values[i].Product_Id}');"> <i class="fa fa-shopping-cart mt-2" style="font-size:20px; padding: 3px;"></i></a>`
+                        }
+                        else {
+                            htmlData += ` <a  data-tooltip="Remove from cart"  onclick="removefromCart('${response.Values[i].Product_Id}');"> <i class="fa fa-shopping-cart mt-2" style="font-size:20px; padding: 3px;color:red"></i></a>`
+                        }
+                        htmlData += `</div>`
+                        htmlData += ` <div id="wish${response.Values[i].Product_Id}" class="product-hover-icons"style="margin-left:30px">`
+                        if (response.Values[i].IsInWishlist  == false) {
+                            htmlData += ` <a  data-tooltip="Add to wishlist" onclick="addToWishList('${response.Values[i].Product_Id}');"> <i class="fa fa-heart-o mt-2" style="font-size:20px; padding: 3px;"></i></a>`
+                        }
+                        else {
+                            htmlData += ` <a  data-tooltip="Remove from wishlist" onclick="removefromWishList('${response.Values[i].Product_Id}');"> <i class="fa fa-heart mt-2" style="font-size:20px; padding: 3px;color:red"></i></a>`
+                        }
+                        htmlData += `</div>`
+                        htmlData += `</div>`
+                        htmlData += ` <div class="product-content"> `
+                        htmlData += `<h3 class="product-title"><a href="single-product.html">${response.Values[i].Name}</a></h3>`
+                        htmlData += `<div class="price-box"><span >&#8377; ${response.Values[i].Price}</span>
+                                        <p class="product-description" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 13ch;margin: auto;">${response.Values[i].Description}</p>`
+                        htmlData += `</div>`
+                        htmlData += `</div>`
+                        htmlData += `</div>`
+                        htmlData += `</div>`
+                    }
+                    if (response.TotalRecords > limit) {
+                        $("#showmore").html(` <div class="col-lg-12"> <h3 class= "text-center" style="color:#80bb01 !important"> <a onclick="Showmorefunc(); ">Show More</a></h3> </div >`);
+                    }
+                    else {
+                        $("#showmore").html(` <div class="col-lg-12">
+                            <h4 class= "text-center"> No more records found</h4>
+                            </div >`);
+                    }
+                }
+                else {
+
+                    htmlData += '<h5 class="text-center">No Record Found</h5>';
+                }
+
+                $("#ProductItem").html(htmlData);
+            },
+            error: function (error) {
+                console.log('error', error);
+            }
+        })
+    }
+    function Showmorefunc() {
+        limit += 12;
+        productadd('', limit);
+    }
+    function addToWishList(Product_Id) {
+        if (@ProjectSession.Users_Id == 0 || @ProjectSession.Users_Id == null) {
+            window.location.href = '@Url.Action(Actions.Login, Controllers.Myaccount)';
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action(Actions.Wishlist_Upsert, Controllers.Wishlist)',
+                data: { Product_Id: Product_Id },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.Code == 200) {
+                        $("#" + "wish" + Product_Id + "").html(`<a data-tooltip="Remove from wishlist" onclick="removefromWishList('${response.Item.Product_Id}');"> <i class="fa fa-heart mt-2" style="font-size:20px; padding: 3px;color:red"></i></a>`);
+                    }
+                    else {
+                        swal("Error !", response.Message, "error");
+                    }
+                },
+                error: function (error) {
+                    swal("Error !", "Something Went Wrong", "error");
+                }
+            });
+        }
+    }
+    function removefromWishList(Product_Id) {
+        if (@ProjectSession.Users_Id == 0 || @ProjectSession.Users_Id == null) {
+            window.location.href = '@Url.Action(Actions.Login, Controllers.Myaccount)';
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action(Actions.Wishlist_Delete, Controllers.Wishlist)',
+                data: { Product_Id: Product_Id },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.Code == 200) {
+                        $("#" + "wish" + Product_Id + "").html(` <a  data-tooltip="Add to wishlist" onclick="addToWishList('${response.Item.Product_Id}');"> <i class="fa fa-heart-o mt-2" style="font-size:20px; padding: 3px;"></i></a>` );
+                    }
+                    else {
+                        swal("Error !", response.Message, "error");
+                    }
+                },
+                error: function (error) {
+                    swal("Error !", "Something Went Wrong", "error");
+                }
+            });
+        }
+    }
+    function removefromCart(Product_Id) {
+        if (@ProjectSession.Users_Id == 0 || @ProjectSession.Users_Id == null) {
+            window.location.href = '@Url.Action(Actions.Login, Controllers.Myaccount)';
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action(Actions.Cart_Delete, Controllers.Cart)',
+                data: { Product_Id: Product_Id },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.Code == 200) {
+                        $("#" + "cart" + Product_Id + "").html(` <a  data-tooltip="Add to cart" onclick="addToCart('${response.Item.Product_Id}');"> <i class="fa fa-shopping-cart mt-2" style="font-size:20px; padding: 3px;"></i></a>`);
+                    }
+                    else {
+                        swal("Error !", response.Message, "error");
+                    }
+                },
+                error: function (error) {
+                    swal("Error !", "Something Went Wrong", "error");
+                }
+            });
+        }
+    }
+
+
+    function addToCart(Product_Id) {
+        if (@ProjectSession.Users_Id == 0 || @ProjectSession.Users_Id == null) {
+            window.location.href = '@Url.Action(Actions.Login, Controllers.Myaccount)';
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action(Actions.Cart_Upsert, Controllers.Cart)',
+                data: { Product_Id: Product_Id },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.Code == 200) {
+                        $("#" + "cart" + Product_Id + "").html(`<a data-tooltip="Remove from cart" onclick="removefromCart('${response.Item.Product_Id}');"> <i class="fa fa-shopping-cart mt-2" style="font-size:20px; padding: 3px;color:red"></i></a>`);
+                    }
+                    else {
+                        swal("Error !", response.Message, "error");
+                    }
+                },
+                error: function (error) {
+                    swal("Error !", "Something Went Wrong", "error");
+                }
+            });
+        }
+    }
+
+
+</script>
+
