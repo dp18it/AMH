@@ -146,9 +146,9 @@
                         <!-- end of search bar -->
                         <!-- shopping cart -->
                         <div class="shopping-cart" id="shopping-cart">
-                            <a href="/Cart/Index">
+                            <a href="/Cart/Index" >
                                 <div class="cart-icon d-inline-block">
-                                    <span class="fa fa-shopping-cart"></span>
+                                    <span class="fa fa-shopping-cart" id="shopping"></span>
                                     <h5><b style="color: #666666; margin-left: 6px; ">Cart</b></h5>
                                 </div>
                             </a>
@@ -250,28 +250,44 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
 
+                        <!--=======  single navigation section  =======-->
+
                         <div class="single-navigation-section">
-                            <h3 class="nav-section-title" style="margin-left: 20px;">Address</h3>
+                            <h3 class="nav-section-title" @*style="margin-left: 75px;"*@>MY ACCOUNT</h3>
                             <ul>
-                                <li> <a style="margin-left: 20px;">A-502 Abhilasha Sky, oppo. Suncity bunglows, Near Gopal Chawk,Ahmedabad- 382350</a></li>
+                                <li> <a href="/Myaccount/Index" @*style="margin-left: 75px;"*@>My Account</a></li>
+                                <li> <a href="/Wishlist/Index" @*style="margin-left: 75px;"*@>Wishlist</a></li>
+                                <li> <a href="/Cart/Index" @*style="margin-left: 75px;"*@>Shopping Cart</a></li>
+
+                            </ul>
+                        </div>
+
+                        <!--=======  End of single navigation section  =======-->
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
+
+                        <div class="single-navigation-section">
+                            <h3 class="nav-section-title" @*style="margin-left: 20px;"*@>Address</h3>
+                            <ul>
+                                <li> <a @*style="margin-left: 20px;"*@>A-502 Abhilasha Sky, oppo. Suncity bunglows, Near Gopal Chawk,Ahmedabad- 382350</a></li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-5 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
 
                         <!--=======  single navigation section  =======-->
 
                         <div class="single-navigation-section" bb>
-                            <h3 class="nav-section-title" style="margin-left: 75px;">
+                            <h3 class="nav-section-title" @*style="margin-left: 20px;"*@>
                                 Email
                             </h3>
-                            <a style="margin-left: 75px;" class="lowercase" href="mailto:agricpower@gmail.com"><l>agricpower@gmail.com</l></a>
-                            <a style="margin-left: 75px;" class="lowercase" href="mailto:dishazalavadiya6@gmail.com">dishazalavadiya6@gmail.com</a>
-                            <a style="margin-left: 75px;" class="lowercase" href="mailto:mahimasuhagiya@gmail.com">mahimasuhagiya@gmail.com</a>
-                            <a style="margin-left: 75px;" class="lowercase" href="mailto:parmarmansi@gmail.com">parmarmansi@gmail.com</a>
+                            <a @*style="margin-left: 75px;"*@ class="lowercase" href="mailto:agricpower@gmail.com"><l>agricpower@gmail.com</l></a>
+                            <a @*style="margin-left: 75px;"*@ class="lowercase" href="mailto:dishazalavadiya6@gmail.com">dishazalavadiya6@gmail.com</a>
+                            <a @*style="margin-left: 75px;"*@ class="lowercase" href="mailto:mahimasuhagiya@gmail.com">mahimasuhagiya@gmail.com</a>
+                            <a @*style="margin-left: 75px;"*@ class="lowercase" href="mailto:parmarmansi@gmail.com">parmarmansi@gmail.com</a>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
 
                         <!--=======  single navigation section  =======-->
 
@@ -284,18 +300,7 @@
 
                         <!--=======  End of single navigation section  =======-->
                     </div>
-
-                </div>
-            </div>
-        </div>
-
-        <!--=======  End of social contact section  =======-->
-        <!--=======  footer navigation  =======-->
-
-        <div class="footer-navigation-section pt-40 pb-40">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-7 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
 
                         <!--=======  single navigation section  =======-->
 
@@ -310,11 +315,36 @@
 
                         <!--=======  End of single navigation section  =======-->
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
+                </div>
+            </div>
+        </div>
+
+        <!--=======  End of social contact section  =======-->
+        <!--=======  footer navigation  =======-->
+
+        <!--<div class="footer-navigation-section pt-40 pb-40">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7 col-md-3 col-sm-6 col-xs-12 mb-xs-30">-->
 
                         <!--=======  single navigation section  =======-->
 
-                        <div class="single-navigation-section">
+                        <!--<div class="single-navigation-section">
+                            <h3 class="nav-section-title" style="margin-left: 20px;">INFORMATION</h3>
+                            <ul>
+                                <li> <a href="/Contactus/Index" style=" margin-left: 20px;">About Us</a></li>
+                                <li> <a href="/PrivacyPolicy/Index" style=" margin-left: 20px;">Privacy Policy</a></li>
+                                <li> <a href="/TermsandCondition/Index" style=" margin-left: 20px;">Terms & Condition</a></li>
+                            </ul>
+                        </div>-->
+
+                        <!--=======  End of single navigation section  =======-->
+                    <!--</div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">-->
+
+                        <!--=======  single navigation section  =======-->
+
+                        <!--<div class="single-navigation-section">
                             <h3 class="nav-section-title" style="margin-left: 75px;">MY ACCOUNT</h3>
                             <ul>
                                 <li> <a href="/Myaccount/Index" style="margin-left: 75px;">My Account</a></li>
@@ -322,10 +352,10 @@
                                 <li> <a href="/Cart/Index" style="margin-left: 75px;">Shopping Cart</a></li>
 
                             </ul>
-                        </div>
+                        </div>-->
 
                         <!--=======  End of single navigation section  =======-->
-                    </div>
+                    <!--</div>-->
                     <!--<div class="col-lg-4 col-md-3 col-sm-6 col-xs-12 mb-xs-30">-->
 
                         <!--=======  single navigation section  =======-->
@@ -340,13 +370,13 @@
 
                         <!--=======  End of single navigation section  =======-->
                     <!--</div>-->
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <!--<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">-->
                         <!--=======  single navigation section  =======-->
                         <!--=======  End of single navigation section  =======-->
-                    </div>
+                    <!--</div>
                 </div>
             </div>
-        </div>
+        </div>-->
     </center>
     <!--=======  End of footer navigation  =======-->
     <!--=======  copyright section  =======-->
@@ -354,7 +384,7 @@
     <div class="copyright-section pt-35 pb-35">
         <div class="container">
             <div class="row align-items-md-center align-items-sm-center">
-                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 text-center text-md-left">
+                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 text-center text-md-left"style="margin-left: 450px;">
                     <!--=======  copyright text	  =======-->
 
                     <div class="copyright-segment">
