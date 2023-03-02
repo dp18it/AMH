@@ -13,6 +13,7 @@
         public const string Feedback = "Feedback";
         public const string Order = "Order";
         public const string Users = "Users";
+        public const string Payment = "Payment";
         //public const string 
         
 

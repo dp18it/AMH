@@ -148,6 +148,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\ResetPasswordModel.cs" />
@@ -5362,6 +5363,7 @@
     <Content Include="Views\TermsandCondition\Index.cshtml" />
     <Content Include="Views\Myaccount\ForgotPassword.cshtml" />
     <Content Include="Views\Myaccount\ResetPassword.cshtml" />
+    <Content Include="Views\Payment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

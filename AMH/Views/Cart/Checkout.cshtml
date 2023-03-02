@@ -13,7 +13,8 @@
                 <div class="col">
                     <div class="breadcrumb-container">
                         <ul>
-                            <li>@*<a href="index.html"><i class="fa fa-home"></i> Home</a>*@</li>
+                            <li><a href="/Home/Index"><i class="fa fa-home"></i>Home</a></li>
+                            <li><a href="/cart/Index">Cart</a></li>
                             <li class="active">Checkout</li>
                         </ul>
                     </div>
@@ -74,7 +75,7 @@
 
                                     <div class="single-method">
                                         <input type="radio" id="payment_paypal" name="payment-method" value="paypal">
-                                        <label for="payment_paypal">Paypal</label>
+                                        <label for="payment_paypal">Pay online with credit/debit card</label>
                                     </div>
 
                                     <div class="single-method">
@@ -84,7 +85,7 @@
 
                                 </div>
 
-                                <button class="place-order" onclick="addtoorder()">Place order</button>
+                                <button type="button" class="place-order" onclick="addtoorder()">Place order</button>
 
                             </div>
 
@@ -95,6 +96,11 @@
             </div>
         </div>
     </div>
+
+
+    
+
+
 
     <a href="#" class="scroll-top"></a>
     <!-- end of scroll to top -->
@@ -169,39 +175,8 @@
                 if (document.getElementById('payment_cash').checked || document.getElementById('payment_check').checked || document.getElementById('payment_paypal').checked)
                 {
                     if (document.getElementById('payment_paypal').checked) {
-                        $.ajax({
-                            type: "POST",
-                            url: '@Url.Action(Actions.Checkoutpayment, Controllers.Cart)',
-                          //  data: { ProIds: proids, Quantities: quantities, Prices: prices, TotalAmout: totalamout, PaymentStatus: false },
-                            dataType: 'json',
-                            success: function (response) {
-                                if (response.Code == 200) {
-                                    swal({
-                                        title: "Success !",
-                                        text: response.Message,
-                                        icon: "success",
-                                        timer: 3000
-                                    })
-                                    viewOrder();
-                                }
-                                else {
-                                    swal({
-                                        title: "Error !",
-                                        text: response.Message,
-                                        icon: "error",
-                                        timer: 3000
-                                    })
-                                }
-                            },
-                            error: function (error) {
-                                swal({
-                                    title: "Error !",
-                                    text: "Something Went Wrong",
-                                    icon: "error",
-                                    timer: 3000
-                                })
-                            }
-                        });
+                        window.location.href = '@Url.Action(Actions.Index, Controllers.Payment)?amount=' + TotalAmout + '';
+                       // <a href="~/Views/Payment/Index.cshtml">~/Views/Payment/Index.cshtml</a>
                     }
                     else {
                         $.ajax({

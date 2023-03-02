@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Configuration;
 
 namespace AMH.Controllers
 {
@@ -37,6 +38,7 @@ namespace AMH.Controllers
         }
         public ActionResult Checkout()
         {
+            ViewBag.StripePublishKey = ConfigurationManager.AppSettings["StripePublishableKey"];
             return View();
         }
 
