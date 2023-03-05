@@ -8,7 +8,6 @@ using AMH.Common.Paging;
 using AMH.Data.Contract;
 using AMH.Entities.Contract;
 using AMH.Services.Contract;
-
 namespace AMH.Services.V1
 {
     public class AdminServices : AbstractAdminServices
@@ -61,9 +60,17 @@ namespace AMH.Services.V1
         {
             return this.abstractAdminDao.Admin_ChangePassword(Id, OldPassword, NewPassword, ConfirmPassword);
         }
+        public override SuccessResult<AbstractAdmin> Admin_ForgotPassword(string NewPassword, string ConfirmPassword, string Email)
+        {
+            return this.abstractAdminDao.Admin_ForgotPassword(NewPassword, ConfirmPassword, Email);
+        }
         public override SuccessResult<AbstractAdmin> Admin_ResetPassword(string NewPassword, string ConfirmPassword, string Email)
         {
             return this.abstractAdminDao.Admin_ResetPassword(NewPassword, ConfirmPassword, Email);
+        }
+        public override SuccessResult<AbstractAdmin> Admin_CheckEmailExists(string Email)
+        {
+            return this.abstractAdminDao.Admin_CheckEmailExists(Email);
         }
     }
 }

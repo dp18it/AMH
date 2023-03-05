@@ -54,6 +54,8 @@ namespace AMH.Data.V1
 
             param.Add("@Admin_Id", AbstractAdmin.Admin_Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
             param.Add("@Email", AbstractAdmin.Email, dbType: DbType.String, direction: ParameterDirection.Input);
+            param.Add("@FirstName", AbstractAdmin.FirstName, dbType: DbType.String, direction: ParameterDirection.Input);
+            param.Add("@LastName", AbstractAdmin.LastName, dbType: DbType.String, direction: ParameterDirection.Input);
             param.Add("@Password", AbstractAdmin.Password, dbType: DbType.String, direction: ParameterDirection.Input);
             param.Add("@ContactNo", AbstractAdmin.ContactNo, dbType: DbType.Int32, direction: ParameterDirection.Input);
             param.Add("@Createdby", AbstractAdmin.Createdby, dbType: DbType.Int64, direction: ParameterDirection.Input);
@@ -159,7 +161,7 @@ namespace AMH.Data.V1
 
         public override SuccessResult<AbstractAdmin> Admin_ChangePassword(int Id, string OldPassword, string NewPassword, string ConfirmPassword)
         {
-            SuccessResult<AbstractAdmin> Users = null;
+            SuccessResult<AbstractAdmin> Admin = null;
             var param = new DynamicParameters();
 
             param.Add("@Id", Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
@@ -170,16 +172,15 @@ namespace AMH.Data.V1
             using (SqlConnection con = new SqlConnection(Configurations.ConnectionString))
             {
                 var task = con.QueryMultiple(SQLConfig.Admin_ChangePassword, param, commandType: CommandType.StoredProcedure);
-                Users = task.Read<SuccessResult<AbstractAdmin>>().SingleOrDefault();
-                Users.Item = task.Read<Admin>().SingleOrDefault();
+                Admin = task.Read<SuccessResult<AbstractAdmin>>().SingleOrDefault();
+                Admin.Item = task.Read<Admin>().SingleOrDefault();
             }
 
-            return Users;
+            return Admin;
         }
-
-        public override SuccessResult<AbstractAdmin> Admin_ResetPassword(string NewPassword, string ConfirmPassword, string Email)
+        public override SuccessResult<AbstractAdmin> Admin_ForgotPassword(string NewPassword, string ConfirmPassword, string Email)
         {
-            SuccessResult<AbstractAdmin> Users = null;
+            SuccessResult<AbstractAdmin> Admin = null;
             var param = new DynamicParameters();
 
             param.Add("@NewPassword", NewPassword, dbType: DbType.String, direction: ParameterDirection.Input);
@@ -188,12 +189,48 @@ namespace AMH.Data.V1
 
             using (SqlConnection con = new SqlConnection(Configurations.ConnectionString))
             {
-                var task = con.QueryMultiple(SQLConfig.Users_ResetPassword, param, commandType: CommandType.StoredProcedure);
-                Users = task.Read<SuccessResult<AbstractAdmin>>().SingleOrDefault();
-                Users.Item = task.Read<Admin>().SingleOrDefault();
+                var task = con.QueryMultiple(SQLConfig.Admin_ForgotPassword, param, commandType: CommandType.StoredProcedure);
+                Admin = task.Read<SuccessResult<AbstractAdmin>>().SingleOrDefault();
+                Admin.Item = task.Read<Admin>().SingleOrDefault();
             }
 
-            return Users;
+            return Admin;
+        }
+
+       
+        public override SuccessResult<AbstractAdmin> Admin_CheckEmailExists(string Email)
+        {
+            SuccessResult<AbstractAdmin> Admin = null;
+            var param = new DynamicParameters();
+
+            param.Add("@Email", Email, dbType: DbType.String, direction: ParameterDirection.Input);
+
+            using (SqlConnection con = new SqlConnection(Configurations.ConnectionString))
+            {
+                var task = con.QueryMultiple(SQLConfig.Admin_CheckEmailExists, param, commandType: CommandType.StoredProcedure);
+                Admin = task.Read<SuccessResult<AbstractAdmin>>().SingleOrDefault();
+                Admin.Item = task.Read<Admin>().SingleOrDefault();
+            }
+
+            return Admin;
+        }
+        public override SuccessResult<AbstractAdmin> Admin_ResetPassword(string NewPassword, string ConfirmPassword, string Email)
+        {
+            SuccessResult<AbstractAdmin> Admin = null;
+            var param = new DynamicParameters();
+
+            param.Add("@NewPassword", NewPassword, dbType: DbType.String, direction: ParameterDirection.Input);
+            param.Add("@ConfirmPassword", ConfirmPassword, dbType: DbType.String, direction: ParameterDirection.Input);
+            param.Add("@Email", Email, dbType: DbType.String, direction: ParameterDirection.Input);
+
+            using (SqlConnection con = new SqlConnection(Configurations.ConnectionString))
+            {
+                var task = con.QueryMultiple(SQLConfig.Admin_ResetPassword, param, commandType: CommandType.StoredProcedure);
+                Admin = task.Read<SuccessResult<AbstractAdmin>>().SingleOrDefault();
+                Admin.Item = task.Read<Admin>().SingleOrDefault();
+            }
+
+            return Admin;
         }
 
     }

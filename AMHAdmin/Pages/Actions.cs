@@ -58,6 +58,14 @@
 
 
         public const string GetAdminDetails = "GetAdminDetails";
+        //public const string Admin_CheckEmailExists = "Admin_CheckEmailExists";
+        //public const string Admin_ResetPassword = "Admin_ResetPassword";
+        public const string ResetPassword = "ResetPassword";
+        public const string IsEmailIdExists = "IsEmailIdExists";
+        public const string ForgotPassword = "ForgotPassword";
+        public const string Check_ResetLink = "Check_ResetLink";
+        public const string Admin_CheckEmailExists = "Admin_CheckEmailExists";
+
 
         public const string Users_All = "Users_All";
         public const string Users_ActInAct = "Users_ActInAct";
