@@ -1,7 +1,104 @@
-﻿
+﻿@using AMH.Common;
+@using AMH.Pages;
 @{
     ViewBag.Title = "success";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="page-content mb-50">
+    <div class="container">
+        <div class="row">
+            <h2>* Congratulations *</h2>
+        </div>
+    </div>
+</div>
 
-<h2>success</h2>
+<script>
+    var ProIds = [];
+    var Quantities = [];
+    var Prices = [];
+    var TotalAmout;
+    $(document).ready(function ($) {
+        productadd('', 0);
+
+    });
+
+
+    function productadd(search, lm) {
+        $.ajax({
+            type: "get",
+            url: '@Url.Action(Actions.Cart_All, Controllers.Cart)',
+            data: ({ limit: lm, Search: search }),
+            dataType: 'json',
+            success: function (response) {
+                var htmlData = "";
+                var subtotal = 0;
+                if (response.Values.length > 0) {
+                   
+                    for (var i = 0; i < response.Values.length; i++) {
+                        subtotal += response.Values[i].Total;
+
+                        ProIds.push(response.Values[i].Product_Id);
+                        Quantities.push(response.Values[i].Quantity);
+                        Prices.push(response.Values[i].Price);
+                        TotalAmout = subtotal + 100;
+                    }
+                    paymentorder();
+                }
+                else {
+
+                   // htmlData += '<h5 class="text-center">No Record Found</h5>';
+                }
+
+                //$("#carttotal").html(htmlData);
+            },
+            error: function (error) {
+                console.log('error', error);
+            }
+        })
+    }
+
+
+
+    function paymentorder() {
+        var proids = ProIds.toString();
+        var quantities = Quantities.toString();
+        var prices = Prices.toString();
+        var totalamout = TotalAmout;
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action(Actions.OrderAMH_Upsert, Controllers.Order)',
+            data: { ProIds: proids, Quantities: quantities, Prices: prices, TotalAmout: totalamout, PaymentStatus: true },
+            dataType: 'json',
+            success: function (response) {
+                if (response.Code == 200) {
+                    swal({
+                        title: "Success !",
+                        text: response.Message,
+                        icon: "success",
+                        timer: 3000
+                    })
+                    window.location.href = '@Url.Action(Actions.Index, Controllers.Cart)'
+                    //viewOrder();
+                }
+                else {
+                    swal({
+                        title: "Error !",
+                        text: response.Message,
+                        icon: "error",
+                        timer: 3000
+                    })
+                }
+            },
+            error: function (error) {
+                swal({
+                    title: "Error !",
+                    text: "Something Went Wrong",
+                    icon: "error",
+                    timer: 3000
+                })
+            }
+        });
+    }
+</script>
 

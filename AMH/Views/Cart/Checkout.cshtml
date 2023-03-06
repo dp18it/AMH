@@ -184,6 +184,8 @@
                             dataType: 'json',
                             success: function (response) {
                                 window.location.href = response.Url;
+                               // viewOrder();
+                                
                             },
                             error: function (error) {
                                 swal({
@@ -253,7 +255,7 @@
     }
 
     function viewOrder(){
-        window.location.href = '@Url.Action(Actions.Index, Controllers.Myaccount)'
+        window.location.href = '@Url.Action(Actions.Index, Controllers.Cart)'
     };
 
     function Adddetails() {

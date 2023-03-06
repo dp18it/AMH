@@ -17,27 +17,27 @@ namespace AMH.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateCheckoutSession(string amount)
+        public ActionResult CreateCheckoutSession(string amount,string name)
         {
             var options = new Stripe.Checkout.SessionCreateOptions
             {
-                LineItems = new List <SessionLineItemOptions>
-            {
-                new SessionLineItemOptions
+                LineItems = new List<SessionLineItemOptions>
                 {
-                    PriceData = new SessionLineItemPriceDataOptions
+                    new SessionLineItemOptions
                     {
-                        UnitAmount = Convert.ToInt32(amount) * 100,
-                        Currency = "inr",
-                        ProductData = new SessionLineItemPriceDataProductDataOptions
+                        PriceData = new SessionLineItemPriceDataOptions
                         {
-                            Name = "AgricPower1",
-                        },
+                            UnitAmount = Convert.ToInt32(amount) * 100,
+                            Currency = "inr",
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = "Agric Power",
+                            },
 
+                        },
+                        Quantity = 1,
                     },
-                    Quantity = 1,
                 },
-        },
                 Mode = "payment",
                 SuccessUrl = "https://localhost:44354/Home/success",
                 CancelUrl = "https://localhost:44354/Home/cancel",
