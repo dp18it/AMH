@@ -10,6 +10,8 @@ using AMH.Infrastructure;
 using AMH.Common;
 using Autofac;
 using System;
+using System.Web.Configuration;
+using Stripe;
 
 namespace AMH
 {
@@ -27,6 +29,8 @@ namespace AMH
             ModelMetadataProviders.Current = new CachedDataAnnotationsModelMetadataProvider();
             ContainerBuilder builder = new ContainerBuilder();
 
+            var secretkey = WebConfigurationManager.AppSettings["StripeSecretKey"];
+            StripeConfiguration.SetApiKey(secretkey);
             //     builder.RegisterType<BaseController>()
             //.As<BaseController>();
 

@@ -175,8 +175,25 @@
                 if (document.getElementById('payment_cash').checked || document.getElementById('payment_check').checked || document.getElementById('payment_paypal').checked)
                 {
                     if (document.getElementById('payment_paypal').checked) {
-                        window.location.href = '@Url.Action(Actions.Index, Controllers.Payment)?amount=' + TotalAmout + '';
+                    //   window.location.href = '@Url.Action(Actions.CreateCheckoutSession, Controllers.Home)?amount=' + TotalAmout + '';
                        // <a href="~/Views/Payment/Index.cshtml">~/Views/Payment/Index.cshtml</a>
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action(Actions.CreateCheckoutSession, Controllers.Home)',
+                            data: { amount: totalamout},
+                            dataType: 'json',
+                            success: function (response) {
+                                window.location.href = response.Url;
+                            },
+                            error: function (error) {
+                                swal({
+                                    title: "Error !",
+                                    text: "Something Went Wrong",
+                                    icon: "error",
+                                    timer: 3000
+                                })
+                            }
+                        });
                     }
                     else {
                         $.ajax({

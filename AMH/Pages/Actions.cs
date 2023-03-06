@@ -37,6 +37,7 @@
         public const string Check_ResetLink = "Check_ResetLink";
         public const string ResetPassword = "ResetPassword";
         public const string Charge = "Charge";
+        public const string CreateCheckoutSession = "CreateCheckoutSession";
 
     }
 }
