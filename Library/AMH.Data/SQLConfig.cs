@@ -31,7 +31,7 @@ namespace AMH.Data
         public const string Admin_ChangePassword = "Admin_ChangePassword";
         public const string Users_ResetPassword = "Users_ResetPassword";
         public const string Users_ForgotPassword = "Users_ForgotPassword";
-        public const string Admin_ResetPassword = "Admin_ResetPassword";
+     
         #endregion
 
         #region SubCategory
@@ -159,6 +159,9 @@ namespace AMH.Data
         public const string Admin_Delete = "Admin_Delete";
         public const string Admin_ActInact = "Admin_ActInact";
         public const string Home_All = "Home_All";
+        public const string Admin_ForgotPassword = "Admin_ForgotPassword";
+        public const string Admin_CheckEmailExists = "Admin_CheckEmailExists";
+        public const string Admin_ResetPassword = "Admin_ResetPassword";
         #endregion
 
 

@@ -217,6 +217,7 @@
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\OrderAMHController.cs" />
     <Compile Include="Controllers\CityController.cs" />
+    <Compile Include="Controllers\ResetPasswordModel.cs" />
     <Compile Include="Controllers\StateController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
@@ -5622,6 +5623,8 @@
     <Content Include="Views\State\Index.cshtml" />
     <Content Include="Views\City\Index.cshtml" />
     <Content Include="Views\OrderAMH\Index.cshtml" />
+    <Content Include="Views\Authentication\ForgotPassword.cshtml" />
+    <Content Include="Views\Authentication\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

@@ -20,6 +20,8 @@ namespace AMH.Services.Contract
         public abstract SuccessResult<AbstractAdmin> Admin_Delete(int Admin_Id, int Deletedby);
         public abstract SuccessResult<AbstractAdmin> Home_All();
         public abstract SuccessResult<AbstractAdmin> Admin_ChangePassword(int Id, string OldPassword, string NewPassword, string ConfirmPassword);
+        public abstract SuccessResult<AbstractAdmin> Admin_ForgotPassword(string Email, string NewPassword, string ConfirmPassword);
+        public abstract SuccessResult<AbstractAdmin> Admin_CheckEmailExists(string Email);
         public abstract SuccessResult<AbstractAdmin> Admin_ResetPassword(string NewPassword, string ConfirmPassword, string Email);
 
 
