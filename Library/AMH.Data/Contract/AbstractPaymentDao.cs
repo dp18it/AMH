@@ -16,7 +16,7 @@ namespace AMH.Data.Contract
         //public abstract SuccessResult<AbstractPayment> Payment_Upsert(AbstractPayment abstractPayment);
         //public abstract SuccessResult<AbstractPayment> Payment_ById(int Payment_Id);
         public abstract SuccessResult<AbstractPayment> Payment_ActInact(int Payment_Id, int Updatedby);
-        public abstract PagedList<AbstractPayment> Payment_All(PageParam pageParam, string Search);
+        public abstract PagedList<AbstractPayment> Payment_All(PageParam pageParam, string Search, int User_Id, string FromDate, string ToDate);
         //public abstract SuccessResult<AbstractPayment> Payment_Delete(int Payment_Id, int Deletedby);
     }
 }

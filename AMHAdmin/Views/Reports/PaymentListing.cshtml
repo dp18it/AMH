@@ -138,12 +138,55 @@
         </div>
     </div>
 </div>
+<div class="modal" id="advFilter" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="title" id="defaultModalLabel">Payment Filters</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row clearfix">
+                    <div class="col-sm-6">
+                        <label>Start Date</label>
+                        <div class="form-group">
+                            <input type="date" class="form-control" name="FromDate" id="FromDate" />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>End Date</label>
+                        <div class="form-group">
+                            <input type="date" class="form-control" name="ToDate " id="ToDate" />
+                        </div>
+                    </div>
+                    @*<div class="col-sm-6">
+                        <label>User Name</label>
+                        @Html.Raw(Html.DropDownList("UserId", (IEnumerable<SelectListItem>)ViewBag.UsersDrp, new { @Id = "UserId", data_live_search = "true", data_show_subtext = "true", @class = "form-control selectpicker" }))
 
+                    </div>*@
+                   
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnSearch" type="button" class="btn btn-primary saveBtn" onclick="SearchReset(false)">Search</button>
+                <button class="btn btn-primary loading" type="button" disabled style="display:none;float:right;">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Searching...
+                </button>
+                <button type="button" data-dismiss="modal" class="btn btn-secondary closeBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts {
     <script>
 
         $(document).ready(() => {
             $("#PaymentId").append('<option value="0" disabled selected hidden>Select Payment</option>');
+            $("#UserId").prepend('<option value="0" selected></option>');
+           
             PaymentDataTable.init();
             $('#PaymentTable_filter').hide();
 
@@ -287,28 +330,35 @@
                         //},
                     ],
                     // setup buttons extentension: http://datatables.net/extensions/buttons/
-                        "buttons": [
+                    "buttons": [
+
+                        //{
+                        //    text: 'Refund For Online Payments',
+                        //    className: 'btn btn-primary mb-3 mt-1 mr-2',
+                        //    action: function (e, dt, node, config) {
+                        //        RefundPage();
+                        //    }
+                        //}
+                            { extend: 'excel', className: 'btn green btn-outline mb-3 mt-1', exportOptions: { columns: [0, 1, 2] } },
+                            { extend: 'pdf', className: 'btn green btn-outline mb-3 mt-1', exportOptions: { columns: [0, 1, 2] } },
+                            { extend: 'print', className: 'btn green btn-outline mb-3 mt-1', exportOptions: { columns: [0, 1, 2] } },
+
                             {
-                                text: 'Refund For Online Payments',
-                                className: 'btn btn-primary mb-3 mt-1 mr-2',
+                                text: 'Filters',
+                                className: 'btn btn-success mb-3 mt-1',
                                 action: function (e, dt, node, config) {
-                                    RefundPage();
+                                    advFilter();
                                 }
-                            }
-                            //{
-                            //    text: 'Filters',
-                            //    className: 'btn btn-primary mb-3 mt-1',
-                            //    action: function (e, dt, node, config) {
-                            //        UserDataFillter();
-                            //    }
-                            //},
-                            //{
-                            //    text: 'Reset',
-                            //    className: ' mb-3 mt-1 mr-3',
-                            //    action: function () {
-                            //        SearchReset(true)
-                            //    }
-                            //}
+                            },
+                            {
+                                text: 'Reset',
+                                className: 'btn btn-success mb-3 mt-1',
+                                action: function (e, dt, node, config) {
+                                    SearchReset(true);
+                                    $("#PaymentTable_filter").hide();
+
+                                }
+                            },
                         ],
 
                         // setup responsive extension: http://datatables.net/extensions/responsive/
@@ -345,43 +395,33 @@
         function SearchCriteria() {
             try {
                 var param = {};
-                //param["Name"] = $("#admin_name").val(),
-                //param["Email"] = $("#admin_email").val(),
-                //param["MobileNumber"] = $("#admin_mobilenumber").val(),
-                //param["AdminTypeId"] = $("#admin_typeid").val(),
-                //param["IsActive"] = $("#admin_isactive").val()
+                param["FromDate"] = $("#FromDate").val();
+                param["ToDate"] = $("#ToDate").val();
+                param["User_Id"] = $("#UsersId").val();
                 return addRequestVerificationToken(param);
             } catch (e) { }
         }
 
-
-        function RefundPage() {
-            window.location.href ="https://dashboard.stripe.com/test/payments";
+         function advFilter() {
+            $('#advFilter').modal('show');
         }
-        //function UserDataFillter() {
-        //    $('#UsersFillter').modal('show');
-        //}
+      
 
-        //function SearchReset(isReset) {
+        const SearchReset = (isReset = false) => {
 
-        //    $(".saveBtn").hide();
-        //    $(".loading").show();
-        //    $(".closeBtn").hide();
+            if (isReset == true) {
+                $('#FromDate').val('');
+                $('#ToDate').val('');
+                $('#UsersId').val(0);
+                
+            }
+            $('#advFilter').modal('hide');
+            $("#PaymentTable_filter").hide();
+        }
 
-        //    if (isReset == true) {
-        //        $('#admin_name').val("");
-        //        $('#admin_email').val("");
-        //        $('#admin_mobilenumber').val("");
-        //        $('#admin_typeid').val("");
-        //        $('#admin_isactive').val(2);
-        //    }
-
-        //    PaymentDataTable.init();
-        //    $('#UsersFillter').modal('hide');
-        //    $(".saveBtn").show();
-        //    $(".loading").hide();
-        //    $(".closeBtn").show();
-        //}
+        function advFilter() {
+            $('#advFilter').modal('show');
+        }
 
         function addRequestVerificationToken(data) {
             data.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();

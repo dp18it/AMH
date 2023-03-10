@@ -21,9 +21,9 @@ namespace AMH.Services.V1
         //{
         //    return this.abstractPaymentDao.Payment_ById(Payment_Id);
         //}
-        public override PagedList<AbstractPayment> Payment_All(PageParam pageParam, string search)
+        public override PagedList<AbstractPayment> Payment_All(PageParam pageParam, string search, int User_Id, string FromDate, string ToDate)
         {
-            return this.abstractPaymentDao.Payment_All(pageParam, search);
+            return this.abstractPaymentDao.Payment_All(pageParam, search,User_Id, FromDate, ToDate);
         }
         //public override SuccessResult<AbstractPayment> Payment_Upsert(AbstractPayment abstractPayment)
         //{
