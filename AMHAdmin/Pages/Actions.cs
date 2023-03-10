@@ -25,7 +25,9 @@
         public const string City_All = "City_All";
         public const string City_ActInact = "City_ActInact";
 
-        
+        public const string Payment_All = "Payment_All";
+        public const string Payment_ActInact = "Payment_ActInact";
+
 
 
         public const string Signin = "Signin";

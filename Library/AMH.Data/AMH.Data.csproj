@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractBaseDao.cs" />
+    <Compile Include="Contract\AbstractPaymentDao.cs" />
     <Compile Include="Contract\AbstractCityDao.cs" />
     <Compile Include="Contract\AbstractStateDao.cs" />
     <Compile Include="Contract\AbstractSubCategoryDao.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="DataModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLConfig.cs" />
+    <Compile Include="V1\PaymentDao.cs" />
     <Compile Include="V1\CityDao.cs" />
     <Compile Include="V1\StateDao.cs" />
     <Compile Include="V1\SubCategoryDao.cs" />

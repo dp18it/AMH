@@ -31,6 +31,7 @@ namespace AMH.Data
             builder.RegisterType<V1.CityDao>().As<AbstractCityDao>().InstancePerDependency();
             builder.RegisterType<V1.StateDao>().As<AbstractStateDao>().InstancePerDependency();
             builder.RegisterType<V1.UsersDao>().As<AbstractUsersDao>().InstancePerDependency();
+            builder.RegisterType<V1.PaymentDao>().As<AbstractPaymentDao>().InstancePerDependency();
             builder.RegisterType<V1.ProductDao>().As<AbstractProductDao>().InstancePerDependency();
             builder.RegisterType<V1.OrderAMHDao>().As<AbstractOrderAMHDao>().InstancePerDependency();
             builder.RegisterType<V1.FeedbackDao>().As<AbstractFeedbackDao>().InstancePerDependency();

@@ -42,6 +42,11 @@ namespace AMH.Data
         public const string SubCategory_Delete = "SubCategory_Delete";
         #endregion
 
+        #region Payment
+        public const string Payment_All = "Payment_All";
+        public const string Payment_ActInact = "Payment_ActInact";
+        #endregion
+        
         #region Product
         public const string Product_Upsert = "Product_Upsert";
         public const string Product_ById = "Product_ById";

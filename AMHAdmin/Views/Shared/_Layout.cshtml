@@ -152,7 +152,7 @@
         <div class="navbar-vertical">
             <div class="navbar-brand-wrapper custome-navabar-logo">
                 <a href="" class="navbar-brand mr-0 beetech-logo">
-                    <img src="~/assets/images/logo/ginnybuddy.png" />
+                    <img src="~/assets/images/logo2.ico"/>
                     @*<img src="~/assets/images/logo/ginnybuddy.jpg">*@
                     @*<h4 class="fw-bold text-center">GinnyBuddy</h4>*@
                 </a>
@@ -188,6 +188,12 @@
                         <a href="@Url.Action("Index","OrderAMH")" id="Order" class="navbar-vertical-link">
                             <div class="navbar-vertical-icon"><i class="fas fa-envelope-open-text"></i></div>
                             Manage Order
+                        </a>
+                    </li>
+                    <li class="navbar-vertical-item">
+                        <a href="@Url.Action("Index","Payment")" id="Payment" class="navbar-vertical-link">
+                            <div class="navbar-vertical-icon"><i class="fab fa-amazon-pay"></i></div>
+                            Manage Payment
                         </a>
                     </li>
                     <li class="navbar-vertical-item">
@@ -312,6 +318,9 @@
                     break;
                 case '@Controllers.State'+ " " + '@Actions.Index':
                     setActiveLink($('#State').attr('id'));
+                    break;
+                case '@Controllers.Payment' + " " + '@Actions.Index':
+                    setActiveLink($('#Payment').attr('id'));
                     break;
                 case '@Controllers.Reports'+ " " + '@Actions.UsersListing':
                     setActiveLink($('#UsersListing').attr('id'));

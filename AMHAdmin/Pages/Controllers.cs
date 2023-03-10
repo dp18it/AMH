@@ -23,6 +23,7 @@ namespace AMHAdmin.Pages
         public const string Product = "Product";
         public const string Users = "Users";
         public const string Reports = "Reports";
+        public const string Payment = "Payment";
 
     }
 }

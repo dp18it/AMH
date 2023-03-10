@@ -39,6 +39,7 @@ namespace AMH.Services
             builder.RegisterType<CategoryServices>().As<AbstractCategoryServices>().InstancePerDependency();
             builder.RegisterType<SubCategoryServices>().As<AbstractSubCategoryServices>().InstancePerDependency();
             builder.RegisterType<AdminServices>().As<AbstractAdminServices>().InstancePerDependency();
+            builder.RegisterType<PaymentServices>().As<AbstractPaymentServices>().InstancePerDependency();
          
             base.Load(builder);
         }

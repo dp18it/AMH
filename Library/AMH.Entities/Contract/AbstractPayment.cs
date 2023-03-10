@@ -16,8 +16,10 @@ namespace AMH.Entities.Contract
         public DateTime Payment_Date { get; set; }
         public int Order_Id { get; set; }
         public int User_Id { get; set; }
+        public string UserName { get; set; }
         public float TotalAmount { get; set; }
         public bool IsActive { get; set; }
+        public bool PaymentStatus { get; set; }
         public DateTime Createddate { get; set; }
         public int Createdby { get; set; }
         public DateTime Updateddate { get; set; }
