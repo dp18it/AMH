@@ -69,11 +69,11 @@
                                 </div>
                                 <div class="col-md-6 mb-20">
                                     <label>Address Line 1</label>
-                                    <textarea class="mb-0" cols="64" id="Address1" Name="Address1" placeholder="House No/,Socity/Bulding Name"></textarea>
+                                    <textarea class="mb-0" cols="60" id="Address1" Name="Address1" placeholder="House No/,Socity/Bulding Name"></textarea>
                                 </div>
                                 <div class="col-md-6 mb-20">
                                     <label>Address Line 2(Optional)</label>
-                                    <textarea class="mb-0" cols="64" id="Address2" Name="Address2" placeholder="Near by place/ Area"></textarea>
+                                    <textarea class="mb-0" cols="60" id="Address2" Name="Address2" placeholder="Near by place/ Area"></textarea>
                                 </div>
                                 <div class="col-md-4 mb-20">
                                     <label>State</label>
@@ -130,6 +130,8 @@
     <script src="~/Scripts/jquery.validate.js"></script>
     <script>
         $(document).ready(() => {
+            $("#CityId").append('<option value="0" disabled selected hidden>Select City</option>');
+            $("#StateId").append('<option value="0" disabled selected hidden>Select State</option>');
             $('#ImageView').hide();
         });
         function readURL(input) {

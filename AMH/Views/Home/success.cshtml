@@ -4,14 +4,56 @@
     ViewBag.Title = "success";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="page-content mb-50">
-    <div class="container">
-        <div class="row">
-            <h2>* Congratulations *</h2>
-        </div>
-    </div>
-</div>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
+</head>
+<style>
+    body {
+        text-align: center;
+        padding: 40px 0;
+        background: #EBF0F5;
+    }
 
+    h1 {
+        color: #88B04B;
+        font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+        font-weight: 900;
+        font-size: 40px;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: #404F5E;
+        font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+        font-size: 20px;
+        margin: 0;
+    }
+
+    i {
+        color: #9ABC66;
+        font-size: 100px;
+        line-height: 200px;
+        margin-left: -15px;
+    }
+
+    .card {
+        background: white;
+        padding: 60px;
+        border-radius: 4px;
+        box-shadow: 0 2px 3px #C8D0D8;
+        display: inline-block;
+        margin: 0 auto;
+    }
+</style>
+<body>
+        <div class="card" style="margin-top:250px;">
+            <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
+                <i class="checkmark">✓</i>
+            </div>
+            <h1>Success</h1>
+            <p>We received your purchase request;<br /> we'll be in touch shortly!</p>
+        </div>
+</body>
 <script>
     var ProIds = [];
     var Quantities = [];
@@ -33,7 +75,7 @@
                 var htmlData = "";
                 var subtotal = 0;
                 if (response.Values.length > 0) {
-                   
+
                     for (var i = 0; i < response.Values.length; i++) {
                         subtotal += response.Values[i].Total;
 
@@ -52,7 +94,6 @@
                 //$("#carttotal").html(htmlData);
             },
             error: function (error) {
-                console.log('error', error);
             }
         })
     }
@@ -72,33 +113,15 @@
             dataType: 'json',
             success: function (response) {
                 if (response.Code == 200) {
-                    swal({
-                        title: "Success !",
-                        text: response.Message,
-                        icon: "success",
-                        timer: 3000
-                    })
-                    window.location.href = '@Url.Action(Actions.Index, Controllers.Cart)'
-                    //viewOrder();
-                }
-                else {
-                    swal({
-                        title: "Error !",
-                        text: response.Message,
-                        icon: "error",
-                        timer: 3000
-                    })
+                    setTimeout(chwindow, 5000);
                 }
             },
             error: function (error) {
-                swal({
-                    title: "Error !",
-                    text: "Something Went Wrong",
-                    icon: "error",
-                    timer: 3000
-                })
             }
         });
+    }
+    function chwindow() {
+        window.location.href = '@Url.Action(Actions.Index, Controllers.Cart)'
     }
 </script>
 
