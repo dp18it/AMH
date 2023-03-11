@@ -15,20 +15,42 @@ namespace AMHAdmin.Controllers
     public class PaymentController : BaseController
     {
         public readonly AbstractPaymentServices abstractPaymentServices;
-        
-        public PaymentController( AbstractPaymentServices abstractPaymentServices)            
+        public readonly AbstractUsersServices abstractUsersServices;
+
+        public PaymentController( AbstractPaymentServices abstractPaymentServices,
+             AbstractUsersServices abstractUsersServices)
         {
             this.abstractPaymentServices = abstractPaymentServices;
+            this.abstractUsersServices = abstractUsersServices;
         }
+
 
         [ActionName(Actions.Index)]
         public ActionResult Index()
         {
+            ViewBag.UsersDrp = UsersDrp();
             return View();
         }
+        [HttpPost]
+        public IList<SelectListItem> UsersDrp()
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
 
+            PageParam pageParam = new PageParam();
+            pageParam.Offset = 0;
+            pageParam.Limit = 0;
 
-        public JsonResult Payment_All([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest requestModel)
+            var result = abstractUsersServices.Users_All(pageParam, "", 0, 0, 2, "", "");
+
+            foreach (var master in result.Values)
+            {
+                items.Add(new SelectListItem() { Text = master.FirstName.ToString(), Value = Convert.ToString(master.Users_Id) });
+            }
+
+            return items;
+        }
+
+        public JsonResult Payment_All([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest requestModel, int User_Id = 0, string FromDate = "", string ToDate = "")
         {
             {
                 int totalRecord = 0;
@@ -39,7 +61,7 @@ namespace AMHAdmin.Controllers
                 pageParam.Limit = requestModel.Length;
 
                 string search = Convert.ToString(requestModel.Search.Value);
-                var response = abstractPaymentServices.Payment_All(pageParam, search);
+                var response = abstractPaymentServices.Payment_All(pageParam, search, User_Id, FromDate, ToDate);
 
                 totalRecord = (int)response.TotalRecords;
                 filteredRecord = (int)response.TotalRecords;

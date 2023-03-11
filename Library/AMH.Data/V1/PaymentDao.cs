@@ -32,7 +32,7 @@ namespace AMH.Data.V1
 
         //    return Payment;
         //}
-        public override PagedList<AbstractPayment> Payment_All(PageParam pageParam, string search)
+        public override PagedList<AbstractPayment> Payment_All(PageParam pageParam, string search,int User_Id, string FromDate, string ToDate)
         {
             PagedList<AbstractPayment> Payment = new PagedList<AbstractPayment>();
 
@@ -40,6 +40,9 @@ namespace AMH.Data.V1
             param.Add("@Offset", pageParam.Offset, dbType: DbType.Int32, direction: ParameterDirection.Input);
             param.Add("@Limit", pageParam.Limit, dbType: DbType.Int32, direction: ParameterDirection.Input);
             param.Add("@Search", search, dbType: DbType.String, direction: ParameterDirection.Input);
+            param.Add("@User_Id", User_Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+            param.Add("@FromDate", FromDate, dbType: DbType.String, direction: ParameterDirection.Input);
+            param.Add("@ToDate", ToDate, dbType: DbType.String, direction: ParameterDirection.Input);
 
 
             using (SqlConnection con = new SqlConnection(Configurations.ConnectionString))
