@@ -391,30 +391,26 @@
             };
         }();
 
-        //Data fillter function
         function SearchCriteria() {
             try {
                 var param = {};
                 param["FromDate"] = $("#FromDate").val();
                 param["ToDate"] = $("#ToDate").val();
-                param["User_Id"] = $("#UsersId").val();
+                //param["User_Id"] = $("#UsersId").val();
                 return addRequestVerificationToken(param);
             } catch (e) { }
         }
-
-         function advFilter() {
+        function advFilter() {
             $('#advFilter').modal('show');
         }
-      
-
         const SearchReset = (isReset = false) => {
 
             if (isReset == true) {
                 $('#FromDate').val('');
                 $('#ToDate').val('');
-                $('#UsersId').val(0);
-                
+                //$('#UsersId').val(0);
             }
+            PaymentDataTable.init();
             $('#advFilter').modal('hide');
             $("#PaymentTable_filter").hide();
         }
@@ -422,6 +418,7 @@
         function advFilter() {
             $('#advFilter').modal('show');
         }
+
 
         function addRequestVerificationToken(data) {
             data.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();

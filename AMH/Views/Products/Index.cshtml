@@ -253,7 +253,7 @@
             $('#menu3').removeClass('active');
         search = '@ViewBag.srech';
         $("#Search").val('@ViewBag.srech');
-        productadd(search,12);
+        productadd(search,8);
     });
     function filterpopup() {
         $('#filterproduct').modal('show');
@@ -267,7 +267,7 @@
 
     }
     function removefilter() {
-        productadd('', 12, 0, 0, 0);
+        productadd('', 8, 0, 0, 0);
         $('#FromAge').val(0);
         $('#ToAge').val(0);
         $('#minAge').val(0);
@@ -357,7 +357,7 @@
         })
     }
     function Showmorefunc() {
-        limit += 12;
+        limit += 8;
         productadd('', limit);
     }
     function addToWishList(Product_Id) {
