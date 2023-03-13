@@ -40,6 +40,7 @@ namespace AMH.Entities.Contract
         public int PlasedOrder { get; set; }
         public int ActiveOrder { get; set; }
         public int NewProduct { get; set; }
+        public int NewPlasedOrder { get; set; }
         public int NewUsers { get; set; }
         public int ActiveUsers { get; set; }
         public int TotalUsers { get; set; }

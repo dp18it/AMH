@@ -234,6 +234,20 @@
 
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                        <span class="text-secondary text-muted fw-medium fs-16 fw-bold"> Total Order of this month </span>
+                        <img src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/60/external-order-logistics-flaticons-lineal-color-flat-icons.png" />
+                    </div>
+                    <h2 class="fw-bold mb-0" id="NewPlasedOrder" value="NewPlasedOrder"></h2>
+                </div>
+                <a href="#!" class="stretched-link"></a>
+            </div>
+
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-12 pb-4">
+            <div class="card h-100">
+
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
                         <span class="text-secondary text-muted fw-medium fs-16 fw-bold">Order Placed</span>
                         <img src="https://img.icons8.com/bubbles/60/checked.png" />
                     </div>
@@ -315,6 +329,7 @@
                         $('#NewProduct').text(response.Item.NewProduct)
                         $('#ActiveOrder').text(response.Item.ActiveOrder)
                         $('#PlasedOrder').text(response.Item.PlasedOrder)
+                        $('#NewPlasedOrder').text(response.Item.NewPlasedOrder)
                         $('#ReceivedPayment').text(response.Item.ReceivedPayment)
                         $('#PendingPayment').text(response.Item.PendingPayment)
                         $('#Feedback').text(response.Item.Feedback)
