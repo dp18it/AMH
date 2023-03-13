@@ -37,7 +37,7 @@ namespace AMH.Entities.Contract
         [NotMapped]
         public string ImageUrlStr => Configurations.ClientURL + Image;
         [NotMapped]
-        public string BirthDateStr => BirthDate != null ? BirthDate?.ToString("dd-MMM-yyyy hh:mm tt") : "-";
+        public string BirthDateStr => BirthDate != null ? BirthDate?.ToString("dd-MMM-yyyy") : "-";
         [NotMapped]
         public string CreatedDateStr => CreatedDate != null ? CreatedDate.ToString("dd-MMM-yyyy hh:mm tt") : "-";
         [NotMapped]

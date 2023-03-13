@@ -209,8 +209,8 @@
 @section Scripts {
     <script>
         $(document).ready(() => {
-            $("#UsersId").prepend('<option value="0" selected></option>');
-            $("#ProductId").prepend('<option value="0" selected></option>');
+            $("#UsersId").prepend('<option value="0" selected>Please select User</option>');
+            $("#ProductId").prepend('<option value="0" selected>Please select Product</option>');
             OrderDataTable.init();
             $("#UsersTable_filter").hide();
 
@@ -332,9 +332,9 @@
                     ],
                     // setup buttons extentension: http://datatables.net/extensions/buttons/
                         "buttons": [
-                            { extend: 'excel', className: 'btn green btn-outline mb-3 mt-1', exportOptions: { columns: [0, 1, 2] } },
-                            { extend: 'pdf', className: 'btn green btn-outline mb-3 mt-1', exportOptions: { columns: [0, 1, 2] } },
-                            { extend: 'print', className: 'btn green btn-outline mb-3 mt-1', exportOptions: { columns: [0, 1, 2] } },
+                            { extend: 'excel', className: 'btn green btn-outline mb-3 mt-1', exportOptions: { columns: [0, 1, 2, 3, 4] } },
+                            { extend: 'pdf', className: 'btn green btn-outline mb-3 mt-1', exportOptions: { columns: [0, 1, 2, 3, 4] } },
+                            { extend: 'print', className: 'btn green btn-outline mb-3 mt-1', exportOptions: { columns: [0, 1, 2, 3, 4] } },
 
                             {
                                 text: 'Filters',

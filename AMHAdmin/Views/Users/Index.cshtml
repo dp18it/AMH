@@ -310,7 +310,21 @@
                             }
                             , "orderable": false, "width": "3%"
                         },
+                        {
+                            "title": "Is Active ?", "data": "IsActive",
+                            "render": function (data, type, row) {
+                                let htmlData = "";
 
+                                if (row["IsActive"] == 1) {
+                                    htmlData = `<button title="Active" onclick="InActiveMessage('${row["Users_Id"]}');" class="badge badge-primary">Active</button>`;
+                                } else {
+                                    htmlData = `<button title="In-Active" onclick="ActiveMessage('${row["Users_Id"]}');" class="badge badge-danger">In-Active</button>`;
+                                }
+
+                                return htmlData;
+                            }
+                            , "orderable": false, "width": "3%"
+                        },
                     ],
                     // setup buttons extentension: http://datatables.net/extensions/buttons/
                         "buttons": [
@@ -393,7 +407,70 @@
         function advFilter() {
             $('#advFilter').modal('show');
         }
+        function InActiveMessage(User_Id) {
+            swal({
+                title: "Are you sure ?",
+                text: "You will be in-activating the User !",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willupdate) => {
+                if (willupdate) {
+                    UpdateStatus(User_Id);
+                }
+            });
+        }
 
+        //ActiveMessage swal function
+        function ActiveMessage(User_Id) {
+            swal({
+                title: "Are you sure ?",
+                text: "You will be activating the User !",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willupdate) => {
+                if (willupdate) {
+                    UpdateStatus(User_Id);
+                }
+            });
+        }
+
+        //status ActiveInActive change function
+        function UpdateStatus(User_Id) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action(Actions.Users_ActInact, Controllers.Users)',
+                data: { Users_Id: User_Id },
+                dataType: 'json',
+                success: function (response) {
+                    OrderDataTable.init();
+                    if (response.Code == 200) {
+                        swal({
+                            title: "Success",
+                            text: response.Message,
+                            icon: "success",
+                            timer: 2000
+                        })
+                    } else {
+                        swal({
+                            title: "Warning",
+                            text: response.Message,
+                            icon: "warning"
+                        })
+                    }
+                },
+                error: function (error) {
+                    swal({
+                        title: "Warning",
+                        text: response.Message,
+                        icon: "warning"
+                    })
+                }
+            });
+        }
 
         function addRequestVerificationToken(data) {
             data.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
