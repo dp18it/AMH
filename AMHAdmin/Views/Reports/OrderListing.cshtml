@@ -216,8 +216,8 @@
         var ProductIds = '';
         var prices = '';
         $(document).ready(() => {
-            $("#UsersId").prepend('<option value="0" selected></option>');
-            $("#ProductId").prepend('<option value="0" selected></option>');
+            $("#UsersId").prepend('<option value="0" selected>Please select User</option>');
+            $("#ProductId").prepend('<option value="0" selected>Please select Product</option>');
 
             OrderDataTable.init();
             $("#OrderTable_filter").hide();
