@@ -106,7 +106,7 @@ namespace AMHAdmin.Controllers
 
                         var rid = ConvertTo.Base64Encode(dt.Rows[0]["Admin_Id"].ToString());
 
-                        var Link = Configurations.ClientURL + "Authentication/ResetPassword?uid=" + rid;
+                        var Link = Configurations.ClientURL + "Authentication/ResetPassword?aid=" + rid;
                         EmailHelper.SendEmail(welcome, Email, FullName, "We have recieved your request to reset the password.", "", Link);
 
                         string updateAdmin = "Update Admin SET IsResetPassword = 0 where IsActive != 0 and DeletedBy = 0 and Email = '" + Email + "'";
